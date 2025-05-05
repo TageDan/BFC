@@ -1,4 +1,4 @@
-        global _start                  ; directive for global entrypoint for gcc
+global _start                          ; directive for global entrypoint for gcc
 
         section .bss
 MEM:
@@ -26,21 +26,25 @@ _start:                                ; linker entrypoint
 
         call output                    ; test output (expect 'b')
 
-        mov eax, 1
+        mov eax, 255
         call sub
         call output
 
-; scopes will have labels
+        mov eax, 256
+        call add
+        call output
+
+; scope
         mov edx, MEM                   ; get base address of cells
         add dx, bx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
         JE end0                        ; if cell is zero, don't enter scope
 start0:
+
+
+
         mov edx, MEM                   ; get base address of cells
         add dx, bx
-        cmp [edx], byte 00
-        JE end0                        ; if cell is zero jump to end
-        JMP start0                     ; else continue
 end0:
 ; Exit
         mov eax, 1

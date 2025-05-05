@@ -1,5 +1,5 @@
 #!/bin/bash
-nasm -f elf example.asm
-ld -m elf_i386 -s -o example example.o
-chmod +x example
-./example
+nasm -gdwarf -f elf32 $1.asm
+ld -m elf_i386 -o $1 $1.o
+chmod +x $1
+./$1
