@@ -1,4 +1,5 @@
-use std::{collections::VecDeque, str::FromStr};
+use clap::Parser;
+use std::{collections::VecDeque, fs, io::Read, str::FromStr};
 
 // header for nasm program
 // sets up memory cells and entry points
@@ -7,7 +8,7 @@ const HEADER: &'static str = r#"
 
         section .bss
 MEM:
-        resb 65536                     ; 2^16 byte cells
+        resb 30000                     ; 30000 byte cells
 
         section .text
 
@@ -239,6 +240,23 @@ end{0}:
     program
 }
 
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    /// Brainfuck file to compile
+    input_file: String,
+
+    /// Output file for nasm assembly
+    #[arg(short, long, default_value_t=format!("out.asm"))]
+    output_file: String,
+}
+
 fn main() {
-    let input_file = print!("{}", generate(&analyze(&mut parse(TEST_PROG)), &mut 0));
+    let cli = Args::parse();
+
+    let bf_prog = fs::read_to_string(cli.input_file).unwrap();
+
+    let assembly_output = generate(&analyze(&mut parse(&bf_prog)), &mut 0);
+
+    fs::write(cli.output_file, assembly_output).unwrap();
 }

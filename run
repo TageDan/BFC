@@ -1,5 +1,7 @@
 #!/bin/bash
-nasm -gdwarf -f elf32 $1.asm
-ld -m elf_i386 -o $1 $1.o
-chmod +x $1
-./$1
+./target/release/BFC $1
+nasm -f elf32 out.asm
+ld -m elf_i386 -o out out.o
+chmod +x out
+./out
+rm out.o
