@@ -1,0 +1,5 @@
+#!/bin/bash
+nasm -f elf example.asm
+ld -m elf_i386 -s -o example example.o
+chmod +x example
+./example
