@@ -383,14 +383,14 @@ end{0}:
     program
 }
 
-#[derive(Parser, Debug)]
-#[command(version, about, long_about = None)]
+#[derive(Parser)]
+#[command(version, about = "Compiles brainfuck to x86 nasm assembly", long_about = None)]
 struct Args {
     /// Brainfuck file to compile
     input_file: String,
 
     /// Output file for nasm assembly
-    #[arg(short, long, default_value_t=format!("out.asm"))]
+    #[arg(short, long, default_value_t=format!("out.asm"), value_name="FILE")]
     output_file: String,
 }
 
