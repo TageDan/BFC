@@ -1,5 +1,5 @@
 #!/bin/bash
-./target/release/BFC $1
+BFC $1 # compile input file
 nasm -f elf32 out.asm
 ld -m elf_i386 -o out out.o
 chmod +x out
