@@ -1,0 +1,3 @@
+This file tracks changes in assembly file contents when compiling `2048.bf` using `wc`.
+1: 29822 130281 1134567 out.asm
+2: 16213 73871 617700 out.asm

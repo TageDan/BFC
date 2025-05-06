@@ -91,37 +91,75 @@ input:
         ret
 "#;
 
-// Assembly for adding 1
-const ADD: &'static str = r#"
-        mov eax, 1                     ; add 1 to current cell
+// Assembly for adding n
+fn add(n: u8) -> String {
+    format!(
+        r#"
+        mov eax, {n}                     ; add n to current cell
         call add                       ; add value to cell
-"#;
+"#
+    )
+}
 
-// Assembly for subtracting 1
-const SUB: &'static str = r#"
-        mov eax, 1                     ; sub 1 from current cell
+// Assembly for subtracting n
+fn sub(n: u8) -> String {
+    format!(
+        r#"
+        mov eax, {n}                     ; sub n from current cell
         call sub                       ; sub value from cell
-"#;
+"#
+    )
+}
 
-// Assembly for incrementing cell pointer
-const INC: &'static str = r#"
-        add ebx, 1                      ; move cell-pointer (increment)
-"#;
+// Assembly for incrementing cell pointer by n
+fn inc(n: u32) -> String {
+    format!(
+        r#"
+        add ebx, {n}                      ; move cell-pointer (increment)
+"#
+    )
+}
 
 // Assembly for decrementing cell pointer
-const DEC: &'static str = r#"
-        sub ebx, 1                      ; move cell-pointer (decrement)
-"#;
+fn dec(n: u32) -> String {
+    format!(
+        r#"
+        sub ebx, {n}                      ; move cell-pointer (decrement)
+"#
+    )
+}
 
 // Assembly for outputing current cell as ascii
-const OUTPUT: &'static str = r#"
+fn output(n: u32) -> String {
+    format!(
+        r#"
+        mov eax, {n}  ; move number of characters to output into eax register
         call output
-"#;
+"#
+    )
+}
 
 // Assembly for taking one ascii char as input to current cell
-const INPUT: &'static str = r#"
+fn input(n: u32) -> String {
+    format!(
+        r#"
+        mov eax, {n}  ; move number of characters to input into eax register
         call input
-"#;
+"#
+    )
+}
+
+// Assembly for zeroing current cell
+fn zero_cell() -> String {
+    String::from_str(
+        r#"            
+            mov edx, MEM                   ; get base address of cells
+            add dx, bx                     ; add offset (cell counter)
+            mov [edx], 0x0                 ; move zero into cell ( bf - "[-]" )
+        "#,
+    )
+    .unwrap()
+}
 
 enum Token {
     IncCellPointer,
@@ -155,12 +193,28 @@ fn parse(s: &str) -> VecDeque<Token> {
 }
 
 enum IR {
-    IncrementPointer,
-    DecrementPointer,
-    IncrementValue,
-    DecrementValue,
-    OutputValue,
-    InputValue,
+    // u32 denotes how many cells to move (optimization)
+    IncrementPointer(u32),
+
+    // u32 denotes how many cells to move (optimization)
+    DecrementPointer(u32),
+
+    // u8 denotes how much to add (optimization)
+    IncrementValue(u8),
+
+    // u8 denotes how much to sub (optimization)
+    DecrementValue(u8),
+
+    // Zero cell imediatly using mov in case of "[-]"(optimization)
+    ZeroCell,
+
+    // Output values in sequential cells in case of ".>.>.>.>.>"(optimization)
+    OutputValue(u32),
+
+    // Input values to sequential cells in case of ",>,>,>,>,>"(optimization)
+    InputValue(u32),
+
+    // "Scopes" are between '[' and ']'
     Scope(Vec<IR>),
 }
 
@@ -169,13 +223,101 @@ fn analyze(tokens: &mut VecDeque<Token>) -> IR {
     while let Some(t) = tokens.pop_front() {
         match t {
             Token::ScopeEnd => return IR::Scope(ir),
-            Token::DecCellPointer => ir.push(IR::DecrementPointer),
-            Token::IncCellPointer => ir.push(IR::IncrementPointer),
-            Token::ScopeStart => ir.push(analyze(tokens)),
-            Token::Output => ir.push(IR::OutputValue),
-            Token::Input => ir.push(IR::InputValue),
-            Token::Plus => ir.push(IR::IncrementValue),
-            Token::Minus => ir.push(IR::DecrementValue),
+            Token::DecCellPointer => {
+                let mut count = 1;
+                loop {
+                    match tokens.pop_front() {
+                        Some(Token::DecCellPointer) => count += 1,
+                        e => {
+                            if e.is_some() {
+                                tokens.push_front(e.unwrap());
+                            }
+                            break;
+                        }
+                    }
+                }
+                ir.push(IR::DecrementPointer(count))
+            }
+            Token::IncCellPointer => {
+                let mut count = 1;
+                loop {
+                    match tokens.pop_front() {
+                        Some(Token::IncCellPointer) => count += 1,
+                        e => {
+                            if e.is_some() {
+                                tokens.push_front(e.unwrap());
+                            }
+                            break;
+                        }
+                    }
+                }
+                ir.push(IR::IncrementPointer(count))
+            }
+            Token::ScopeStart => ir.push(analyze(tokens)), // change to account for possible "[-]" (ZeroCell)
+            Token::Output => {
+                ir.push(IR::OutputValue(1))
+                // NOT DONE
+                // let mut count = 1;
+                // loop {
+                //     match tokens.pop_front() {
+                //         Some(Token::Output) => count += 1,
+                //         e => {
+                //             if e.is_some() {
+                //                 tokens.push_front(e.unwrap());
+                //             }
+                //             break;
+                //         }
+                //     }
+                // }
+                // ir.push(IR::OutputValue(count))
+            }
+            Token::Input => {
+                ir.push(IR::InputValue(1));
+                // NOT DONE
+                // let mut count = 1;
+                // loop {
+                //     match tokens.pop_front() {
+                //         Some(Token::Input) => count += 1,
+                //         e => {
+                //             if e.is_some() {
+                //                 tokens.push_front(e.unwrap());
+                //             }
+                //             break;
+                //         }
+                //     }
+                // }
+                // ir.push(IR::InputValue(count))
+            }
+            Token::Plus => {
+                let mut count = 1;
+                loop {
+                    match tokens.pop_front() {
+                        Some(Token::Plus) => count += 1,
+                        e => {
+                            if e.is_some() {
+                                tokens.push_front(e.unwrap());
+                            }
+                            break;
+                        }
+                    }
+                }
+                ir.push(IR::IncrementValue(count))
+            }
+            Token::Minus => {
+                let mut count = 1;
+                loop {
+                    match tokens.pop_front() {
+                        Some(Token::Minus) => count += 1,
+                        e => {
+                            if e.is_some() {
+                                tokens.push_front(e.unwrap());
+                            }
+                            break;
+                        }
+                    }
+                }
+                ir.push(IR::DecrementValue(count))
+            }
         }
     }
 
@@ -210,13 +352,14 @@ start{0}:
 
     for instr in ir {
         match instr {
-            &IR::IncrementPointer => program += INC,
-            &IR::DecrementPointer => program += DEC,
-            &IR::IncrementValue => program += ADD,
-            &IR::DecrementValue => program += SUB,
-            &IR::OutputValue => program += OUTPUT,
-            &IR::InputValue => program += INPUT,
+            &IR::IncrementPointer(n) => program += &inc(n),
+            &IR::DecrementPointer(n) => program += &dec(n),
+            &IR::IncrementValue(n) => program += &add(n),
+            &IR::DecrementValue(n) => program += &sub(n),
+            &IR::OutputValue(n) => program += &output(n),
+            &IR::InputValue(n) => program += &input(n),
             &IR::Scope(_) => program += &generate(&instr, scope),
+            &IR::ZeroCell => program += &zero_cell(),
         }
     }
 
