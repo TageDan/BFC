@@ -29,13 +29,13 @@ const FOOTER: &'static str = r#"
 add:
         mov edx, MEM                   ; get base adress of cells
         add edx, ebx                     ; add offset (cell counter)
-        add [edx], eax                 ; add value stored in eax to cell
+        add [edx], al                 ; add value stored in eax to cell
         ret
 
 sub:
         mov edx, MEM                   ; get base adress of cells
         add edx, ebx                     ; add offset (cell counter)
-        sub [edx], eax                 ; sub value stored in eax from cell
+        sub [edx], al                 ; sub value stored in eax from cell
         ret
 
 output:
