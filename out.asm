@@ -10,6 +10,9 @@ MEM:
 _start:                                ; linker entrypoint
         mov ebx, 0                      ; initialize bx as 0 (this will be our cell counter)
 
+        mov eax, 13                     ; add n to current cell
+        call add                       ; add value to cell
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -18,8 +21,30 @@ _start:                                ; linker entrypoint
 start0:
                 
             
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 2                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 5                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 2                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -29,12 +54,19 @@ start0:
         JMP start0                     ; else continue
 end0:        
         
-        mov eax, 9                     ; add n to current cell
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 6                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 32                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; add n to current cell
+        mov eax, 3                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 10                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
         call add                       ; add value to cell
 
 ; scope
@@ -45,24 +77,6 @@ end0:
 start1:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 16                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -71,7 +85,18 @@ start1:
 start2:
                 
             
-        sub ebx, 20                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end2                        ; if cell is zero jump to end
+        JMP start2                     ; else continue
+end2:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -81,20 +106,7 @@ start2:
 start3:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 22                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -104,7 +116,21 @@ start3:
         JMP start3                     ; else continue
 end3:        
         
-        add ebx, 21                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end1                        ; if cell is zero jump to end
+        JMP start1                     ; else continue
+end1:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -114,25 +140,7 @@ end3:
 start4:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 21                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end4                        ; if cell is zero jump to end
-        JMP start4                     ; else continue
-end4:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -142,6 +150,29 @@ end4:
 start5:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end5                        ; if cell is zero jump to end
+        JMP start5                     ; else continue
+end5:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end4                        ; if cell is zero jump to end
+        JMP start4                     ; else continue
+end4:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -150,8 +181,7 @@ start5:
 start6:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -161,15 +191,7 @@ start6:
         JMP start6                     ; else continue
 end6:        
         
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -179,11 +201,6 @@ end6:
 start7:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -198,15 +215,10 @@ end7:
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
+        mov eax, 5                     ; add n to current cell
         call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -216,34 +228,6 @@ end7:
 start8:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end8                        ; if cell is zero jump to end
-        JMP start8                     ; else continue
-end8:        
-        
-        add ebx, 3                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end5                        ; if cell is zero jump to end
-        JMP start5                     ; else continue
-end5:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -258,12 +242,12 @@ start9:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -273,32 +257,27 @@ start9:
         JMP start9                     ; else continue
 end9:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end2                        ; if cell is zero jump to end
-        JMP start2                     ; else continue
-end2:        
+        JE end8                        ; if cell is zero jump to end
+        JMP start8                     ; else continue
+end8:        
         
-        sub ebx, 20                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 18                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 7                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 27                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 17                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -308,6 +287,18 @@ end2:
 start10:
                 
             
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end10                        ; if cell is zero jump to end
+        JMP start10                     ; else continue
+end10:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -327,20 +318,8 @@ start11:
         JMP start11                     ; else continue
 end11:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end10                        ; if cell is zero jump to end
-        JMP start10                     ; else continue
-end10:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -350,10 +329,7 @@ end10:
 start12:
                 
             
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -363,7 +339,7 @@ start12:
 start13:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -384,38 +360,7 @@ start14:
         JMP start14                     ; else continue
 end14:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end15                        ; if cell is zero, don't enter scope
-start15:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end15                        ; if cell is zero jump to end
-        JMP start15                     ; else continue
-end15:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -425,15 +370,27 @@ end15:
         JMP start13                     ; else continue
 end13:        
         
-        add ebx, 18                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end15                        ; if cell is zero, don't enter scope
+start15:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end15                        ; if cell is zero jump to end
+        JMP start15                     ; else continue
+end15:        
+        
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -443,128 +400,6 @@ end13:
 start16:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 7                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 12                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 12                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 24                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -576,230 +411,13 @@ start16:
         JMP start16                     ; else continue
 end16:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
         mov eax, 4                     ; add n to current cell
         call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 22                      ; move cell-pointer (decrement)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -809,6 +427,9 @@ end16:
 start17:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -820,6 +441,13 @@ start18:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -828,7 +456,7 @@ start18:
         JMP start18                     ; else continue
 end18:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -838,17 +466,14 @@ end18:
         JMP start17                     ; else continue
 end17:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end12                        ; if cell is zero jump to end
-        JMP start12                     ; else continue
-end12:        
-        
-        sub ebx, 48                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 7                     ; add n to current cell
         call add                       ; add value to cell
 
 ; scope
@@ -862,8 +487,6 @@ start19:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -875,6 +498,13 @@ start20:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -883,7 +513,22 @@ start20:
         JMP start20                     ; else continue
 end20:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end19                        ; if cell is zero jump to end
+        JMP start19                     ; else continue
+end19:        
+        
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 16                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -893,8 +538,7 @@ end20:
 start21:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -904,10 +548,7 @@ start21:
         JMP start21                     ; else continue
 end21:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -917,31 +558,6 @@ end21:
 start22:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end22                        ; if cell is zero jump to end
-        JMP start22                     ; else continue
-end22:        
-        
-        add ebx, 3                      ; move cell-pointer (increment)
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -953,13 +569,6 @@ start23:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -968,10 +577,7 @@ start23:
         JMP start23                     ; else continue
 end23:        
         
-        mov eax, 7                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -981,17 +587,7 @@ end23:
 start24:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1001,7 +597,15 @@ start24:
 start25:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1011,7 +615,7 @@ start25:
         JMP start25                     ; else continue
 end25:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1021,15 +625,25 @@ end25:
 start26:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1039,30 +653,7 @@ start26:
         JMP start26                     ; else continue
 end26:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end27                        ; if cell is zero, don't enter scope
-start27:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end27                        ; if cell is zero jump to end
-        JMP start27                     ; else continue
-end27:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1072,7 +663,27 @@ end27:
         JMP start24                     ; else continue
 end24:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end27                        ; if cell is zero, don't enter scope
+start27:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end27                        ; if cell is zero jump to end
+        JMP start27                     ; else continue
+end27:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1082,18 +693,7 @@ end24:
 start28:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end28                        ; if cell is zero jump to end
-        JMP start28                     ; else continue
-end28:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1106,12 +706,12 @@ start29:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1121,7 +721,7 @@ start29:
         JMP start29                     ; else continue
 end29:        
         
-        sub ebx, 4                      ; move cell-pointer (decrement)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1134,17 +734,22 @@ start30:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
+        add ebx, 7                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1154,12 +759,17 @@ start30:
         JMP start30                     ; else continue
 end30:        
         
-        add ebx, 3                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end28                        ; if cell is zero jump to end
+        JMP start28                     ; else continue
+end28:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1169,15 +779,7 @@ end30:
 start31:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1187,10 +789,7 @@ start31:
         JMP start31                     ; else continue
 end31:        
         
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1200,88 +799,15 @@ end31:
 start32:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end33                        ; if cell is zero, don't enter scope
-start33:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end33                        ; if cell is zero jump to end
-        JMP start33                     ; else continue
-end33:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end34                        ; if cell is zero, don't enter scope
-start34:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end34                        ; if cell is zero jump to end
-        JMP start34                     ; else continue
-end34:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end35                        ; if cell is zero, don't enter scope
-start35:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end35                        ; if cell is zero jump to end
-        JMP start35                     ; else continue
-end35:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1291,6 +817,73 @@ end35:
         JMP start32                     ; else continue
 end32:        
         
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end33                        ; if cell is zero, don't enter scope
+start33:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end33                        ; if cell is zero jump to end
+        JMP start33                     ; else continue
+end33:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end34                        ; if cell is zero, don't enter scope
+start34:
+                
+            
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end35                        ; if cell is zero, don't enter scope
+start35:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end35                        ; if cell is zero jump to end
+        JMP start35                     ; else continue
+end35:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -1325,13 +918,6 @@ start37:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -1340,7 +926,7 @@ start37:
         JMP start37                     ; else continue
 end37:        
         
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1353,18 +939,6 @@ start38:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -1373,7 +947,7 @@ start38:
         JMP start38                     ; else continue
 end38:        
         
-        add ebx, 4                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1386,13 +960,6 @@ start39:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -1401,10 +968,7 @@ start39:
         JMP start39                     ; else continue
 end39:        
         
-        mov eax, 13                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1414,17 +978,18 @@ end39:
 start40:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end40                        ; if cell is zero jump to end
+        JMP start40                     ; else continue
+end40:        
+        
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1434,7 +999,8 @@ start40:
 start41:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1454,13 +1020,6 @@ end41:
 start42:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -1472,7 +1031,7 @@ start42:
         JMP start42                     ; else continue
 end42:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1482,7 +1041,8 @@ end42:
 start43:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1491,19 +1051,6 @@ start43:
         JE end43                        ; if cell is zero jump to end
         JMP start43                     ; else continue
 end43:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end40                        ; if cell is zero jump to end
-        JMP start40                     ; else continue
-end40:        
         
         add ebx, 1                      ; move cell-pointer (increment)
 
@@ -1526,7 +1073,7 @@ start44:
         JMP start44                     ; else continue
 end44:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1536,15 +1083,7 @@ end44:
 start45:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1554,7 +1093,21 @@ start45:
         JMP start45                     ; else continue
 end45:        
         
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end34                        ; if cell is zero jump to end
+        JMP start34                     ; else continue
+end34:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1564,20 +1117,12 @@ end45:
 start46:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1587,7 +1132,7 @@ start46:
         JMP start46                     ; else continue
 end46:        
         
-        add ebx, 4                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1597,15 +1142,7 @@ end46:
 start47:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1615,10 +1152,7 @@ start47:
         JMP start47                     ; else continue
 end47:        
         
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1633,12 +1167,7 @@ start48:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1648,7 +1177,15 @@ start48:
 start49:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1658,7 +1195,7 @@ start49:
         JMP start49                     ; else continue
 end49:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1668,25 +1205,15 @@ end49:
 start50:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end50                        ; if cell is zero jump to end
-        JMP start50                     ; else continue
-end50:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1696,30 +1223,10 @@ end50:
 start51:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end51                        ; if cell is zero jump to end
-        JMP start51                     ; else continue
-end51:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end48                        ; if cell is zero jump to end
-        JMP start48                     ; else continue
-end48:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1732,6 +1239,13 @@ start52:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -1740,7 +1254,7 @@ start52:
         JMP start52                     ; else continue
 end52:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1753,17 +1267,17 @@ start53:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1773,7 +1287,20 @@ start53:
         JMP start53                     ; else continue
 end53:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end51                        ; if cell is zero jump to end
+        JMP start51                     ; else continue
+end51:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1783,71 +1310,7 @@ end53:
 start54:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end55                        ; if cell is zero, don't enter scope
-start55:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end55                        ; if cell is zero jump to end
-        JMP start55                     ; else continue
-end55:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end56                        ; if cell is zero, don't enter scope
-start56:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end56                        ; if cell is zero jump to end
-        JMP start56                     ; else continue
-end56:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1857,6 +1320,44 @@ end56:
         JMP start54                     ; else continue
 end54:        
         
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end50                        ; if cell is zero jump to end
+        JMP start50                     ; else continue
+end50:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end55                        ; if cell is zero, don't enter scope
+start55:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end55                        ; if cell is zero jump to end
+        JMP start55                     ; else continue
+end55:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end56                        ; if cell is zero, don't enter scope
+start56:
+                
+            
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -1870,6 +1371,13 @@ start57:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -1878,7 +1386,17 @@ start57:
         JMP start57                     ; else continue
 end57:        
         
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end56                        ; if cell is zero jump to end
+        JMP start56                     ; else continue
+end56:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1891,12 +1409,12 @@ start58:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1906,12 +1424,22 @@ start58:
         JMP start58                     ; else continue
 end58:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 16                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end48                        ; if cell is zero jump to end
+        JMP start48                     ; else continue
+end48:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1923,16 +1451,6 @@ start59:
             
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -1941,7 +1459,8 @@ start59:
 start60:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -1951,7 +1470,12 @@ start60:
         JMP start60                     ; else continue
 end60:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1961,25 +1485,15 @@ end60:
 start61:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end61                        ; if cell is zero jump to end
-        JMP start61                     ; else continue
-end61:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -1991,6 +1505,21 @@ start62:
             
         sub ebx, 1                      ; move cell-pointer (decrement)
 
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -1999,20 +1528,7 @@ start62:
         JMP start62                     ; else continue
 end62:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end59                        ; if cell is zero jump to end
-        JMP start59                     ; else continue
-end59:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2025,6 +1541,13 @@ start63:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -2033,7 +1556,17 @@ start63:
         JMP start63                     ; else continue
 end63:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end61                        ; if cell is zero jump to end
+        JMP start61                     ; else continue
+end61:        
+        
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2046,12 +1579,12 @@ start64:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2061,7 +1594,22 @@ start64:
         JMP start64                     ; else continue
 end64:        
         
-        sub ebx, 4                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end59                        ; if cell is zero jump to end
+        JMP start59                     ; else continue
+end59:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2071,20 +1619,12 @@ end64:
 start65:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2094,12 +1634,7 @@ start65:
         JMP start65                     ; else continue
 end65:        
         
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2109,15 +1644,7 @@ end65:
 start66:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 5                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2127,10 +1654,7 @@ start66:
         JMP start66                     ; else continue
 end66:        
         
-        mov eax, 17                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2145,12 +1669,7 @@ start67:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2160,7 +1679,15 @@ start67:
 start68:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2170,7 +1697,7 @@ start68:
         JMP start68                     ; else continue
 end68:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2180,25 +1707,15 @@ end68:
 start69:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end69                        ; if cell is zero jump to end
-        JMP start69                     ; else continue
-end69:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2208,30 +1725,10 @@ end69:
 start70:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end70                        ; if cell is zero jump to end
-        JMP start70                     ; else continue
-end70:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end67                        ; if cell is zero jump to end
-        JMP start67                     ; else continue
-end67:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2244,6 +1741,13 @@ start71:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -2252,7 +1756,7 @@ start71:
         JMP start71                     ; else continue
 end71:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2265,12 +1769,17 @@ start72:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 4                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2280,7 +1789,20 @@ start72:
         JMP start72                     ; else continue
 end72:        
         
-        sub ebx, 6                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end70                        ; if cell is zero jump to end
+        JMP start70                     ; else continue
+end70:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2290,20 +1812,7 @@ end72:
 start73:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2313,7 +1822,15 @@ start73:
         JMP start73                     ; else continue
 end73:        
         
-        add ebx, 5                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end69                        ; if cell is zero jump to end
+        JMP start69                     ; else continue
+end69:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2323,15 +1840,7 @@ end73:
 start74:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 5                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2341,10 +1850,7 @@ start74:
         JMP start74                     ; else continue
 end74:        
         
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2354,17 +1860,7 @@ end74:
 start75:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2374,7 +1870,15 @@ start75:
 start76:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2384,7 +1888,17 @@ start76:
         JMP start76                     ; else continue
 end76:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 11                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end75                        ; if cell is zero jump to end
+        JMP start75                     ; else continue
+end75:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2394,15 +1908,15 @@ end76:
 start77:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2414,6 +1928,21 @@ end77:
         
         sub ebx, 2                      ; move cell-pointer (decrement)
 
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end67                        ; if cell is zero jump to end
+        JMP start67                     ; else continue
+end67:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -2422,29 +1951,6 @@ end77:
 start78:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end78                        ; if cell is zero jump to end
-        JMP start78                     ; else continue
-end78:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end75                        ; if cell is zero jump to end
-        JMP start75                     ; else continue
-end75:        
-        
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -2466,7 +1972,12 @@ start79:
         JMP start79                     ; else continue
 end79:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2484,17 +1995,7 @@ start80:
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 4                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end80                        ; if cell is zero jump to end
-        JMP start80                     ; else continue
-end80:        
-        
-        sub ebx, 6                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2504,20 +2005,22 @@ end80:
 start81:
                 
             
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2527,7 +2030,7 @@ start81:
         JMP start81                     ; else continue
 end81:        
         
-        add ebx, 5                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2540,12 +2043,12 @@ start82:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 5                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2555,10 +2058,17 @@ start82:
         JMP start82                     ; else continue
 end82:        
         
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end80                        ; if cell is zero jump to end
+        JMP start80                     ; else continue
+end80:        
+        
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2568,88 +2078,15 @@ end82:
 start83:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end84                        ; if cell is zero, don't enter scope
-start84:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end84                        ; if cell is zero jump to end
-        JMP start84                     ; else continue
-end84:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end85                        ; if cell is zero, don't enter scope
-start85:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end85                        ; if cell is zero jump to end
-        JMP start85                     ; else continue
-end85:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end86                        ; if cell is zero, don't enter scope
-start86:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end86                        ; if cell is zero jump to end
-        JMP start86                     ; else continue
-end86:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2659,7 +2096,93 @@ end86:
         JMP start83                     ; else continue
 end83:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end78                        ; if cell is zero jump to end
+        JMP start78                     ; else continue
+end78:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end84                        ; if cell is zero, don't enter scope
+start84:
+                
+            
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end85                        ; if cell is zero, don't enter scope
+start85:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 36                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 36                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end85                        ; if cell is zero jump to end
+        JMP start85                     ; else continue
+end85:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end84                        ; if cell is zero jump to end
+        JMP start84                     ; else continue
+end84:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end86                        ; if cell is zero, don't enter scope
+start86:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end86                        ; if cell is zero jump to end
+        JMP start86                     ; else continue
+end86:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2669,6 +2192,51 @@ end83:
 start87:
                 
             
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end88                        ; if cell is zero, don't enter scope
+start88:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end88                        ; if cell is zero jump to end
+        JMP start88                     ; else continue
+end88:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end89                        ; if cell is zero, don't enter scope
+start89:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end89                        ; if cell is zero jump to end
+        JMP start89                     ; else continue
+end89:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -2680,53 +2248,15 @@ start87:
         JMP start87                     ; else continue
 end87:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end88                        ; if cell is zero, don't enter scope
-start88:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 21                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end88                        ; if cell is zero jump to end
-        JMP start88                     ; else continue
-end88:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end89                        ; if cell is zero, don't enter scope
-start89:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2736,20 +2266,7 @@ start89:
 start90:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2759,7 +2276,7 @@ start90:
         JMP start90                     ; else continue
 end90:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2769,35 +2286,7 @@ end90:
 start91:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end91                        ; if cell is zero jump to end
-        JMP start91                     ; else continue
-end91:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end89                        ; if cell is zero jump to end
-        JMP start89                     ; else continue
-end89:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2810,6 +2299,13 @@ start92:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -2818,6 +2314,9 @@ start92:
         JMP start92                     ; else continue
 end92:        
         
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
@@ -2831,27 +2330,12 @@ start93:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end93                        ; if cell is zero jump to end
-        JMP start93                     ; else continue
-end93:        
-        
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2861,88 +2345,15 @@ end93:
 start94:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end95                        ; if cell is zero, don't enter scope
-start95:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end95                        ; if cell is zero jump to end
-        JMP start95                     ; else continue
-end95:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end96                        ; if cell is zero, don't enter scope
-start96:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end96                        ; if cell is zero jump to end
-        JMP start96                     ; else continue
-end96:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end97                        ; if cell is zero, don't enter scope
-start97:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end97                        ; if cell is zero jump to end
-        JMP start97                     ; else continue
-end97:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2952,7 +2363,69 @@ end97:
         JMP start94                     ; else continue
 end94:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end95                        ; if cell is zero, don't enter scope
+start95:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end96                        ; if cell is zero, don't enter scope
+start96:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end96                        ; if cell is zero jump to end
+        JMP start96                     ; else continue
+end96:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end97                        ; if cell is zero, don't enter scope
+start97:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end97                        ; if cell is zero jump to end
+        JMP start97                     ; else continue
+end97:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2962,8 +2435,7 @@ end94:
 start98:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -2974,6 +2446,32 @@ start98:
 end98:        
         
         add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end95                        ; if cell is zero jump to end
+        JMP start95                     ; else continue
+end95:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end93                        ; if cell is zero jump to end
+        JMP start93                     ; else continue
+end93:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -2986,12 +2484,12 @@ start99:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3001,7 +2499,10 @@ start99:
         JMP start99                     ; else continue
 end99:        
         
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3011,10 +2512,13 @@ end99:
 start100:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
 
@@ -3029,6 +2533,13 @@ start101:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -3037,18 +2548,7 @@ start101:
         JMP start101                     ; else continue
 end101:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end100                        ; if cell is zero jump to end
-        JMP start100                     ; else continue
-end100:        
-        
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3061,22 +2561,12 @@ start102:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end102                        ; if cell is zero jump to end
-        JMP start102                     ; else continue
-end102:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 12                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3086,15 +2576,7 @@ end102:
 start103:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3105,16 +2587,6 @@ start103:
 end103:        
         
         add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3127,7 +2599,18 @@ start104:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end104                        ; if cell is zero jump to end
+        JMP start104                     ; else continue
+end104:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3137,7 +2620,7 @@ start104:
 start105:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3147,8 +2630,7 @@ start105:
         JMP start105                     ; else continue
 end105:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3158,7 +2640,8 @@ end105:
 start106:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3168,20 +2651,31 @@ start106:
         JMP start106                     ; else continue
 end106:        
         
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end104                        ; if cell is zero jump to end
-        JMP start104                     ; else continue
-end104:        
+        JE end102                        ; if cell is zero jump to end
+        JMP start102                     ; else continue
+end102:        
         
-        mov eax, 2                     ; add n to current cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end100                        ; if cell is zero jump to end
+        JMP start100                     ; else continue
+end100:        
+        
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3191,17 +2685,10 @@ end104:
 start107:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end107                        ; if cell is zero jump to end
-        JMP start107                     ; else continue
-end107:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3211,10 +2698,7 @@ end107:
 start108:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3224,8 +2708,27 @@ start108:
         JMP start108                     ; else continue
 end108:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end107                        ; if cell is zero jump to end
+        JMP start107                     ; else continue
+end107:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end91                        ; if cell is zero jump to end
+        JMP start91                     ; else continue
+end91:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3235,13 +2738,7 @@ end108:
 start109:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3251,10 +2748,7 @@ start109:
         JMP start109                     ; else continue
 end109:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 25                      ; move cell-pointer (increment)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3267,17 +2761,17 @@ start110:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 23                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 24                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3287,7 +2781,12 @@ start110:
         JMP start110                     ; else continue
 end110:        
         
-        sub ebx, 23                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 26                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3300,12 +2799,12 @@ start111:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 23                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 23                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3315,7 +2814,7 @@ start111:
         JMP start111                     ; else continue
 end111:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3325,6 +2824,16 @@ end111:
 start112:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -3346,8 +2855,15 @@ end113:
         
         sub ebx, 2                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end112                        ; if cell is zero jump to end
+        JMP start112                     ; else continue
+end112:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3357,34 +2873,12 @@ end113:
 start114:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end114                        ; if cell is zero jump to end
-        JMP start114                     ; else continue
-end114:        
-        
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3394,36 +2888,20 @@ end114:
 start115:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end115                        ; if cell is zero jump to end
-        JMP start115                     ; else continue
-end115:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end112                        ; if cell is zero jump to end
-        JMP start112                     ; else continue
-end112:        
-        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3433,12 +2911,7 @@ end112:
 start116:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
 ; scope end
@@ -3449,20 +2922,15 @@ start116:
         JMP start116                     ; else continue
 end116:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end19                        ; if cell is zero jump to end
-        JMP start19                     ; else continue
-end19:        
+        JE end115                        ; if cell is zero jump to end
+        JMP start115                     ; else continue
+end115:        
         
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3475,10 +2943,7 @@ start117:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3488,13 +2953,20 @@ start117:
 start118:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         add ebx, 1                      ; move cell-pointer (increment)
 
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3504,47 +2976,7 @@ start118:
         JMP start118                     ; else continue
 end118:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 25                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 26                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end119                        ; if cell is zero, don't enter scope
-start119:
-                
-            
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end119                        ; if cell is zero jump to end
-        JMP start119                     ; else continue
-end119:        
-        
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3554,10 +2986,17 @@ end119:
         JMP start117                     ; else continue
 end117:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 13                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end119                        ; if cell is zero, don't enter scope
+start119:
+                
+            
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3567,11 +3006,6 @@ end117:
 start120:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -3583,8 +3017,7 @@ start120:
         JMP start120                     ; else continue
 end120:        
         
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3594,12 +3027,7 @@ end120:
 start121:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
 ; scope end
@@ -3610,10 +3038,7 @@ start121:
         JMP start121                     ; else continue
 end121:        
         
-        add ebx, 45                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3623,10 +3048,28 @@ end121:
 start122:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end122                        ; if cell is zero jump to end
+        JMP start122                     ; else continue
+end122:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end119                        ; if cell is zero jump to end
+        JMP start119                     ; else continue
+end119:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3636,7 +3079,17 @@ start122:
 start123:
                 
             
-        sub ebx, 17                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end123                        ; if cell is zero jump to end
+        JMP start123                     ; else continue
+end123:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3649,18 +3102,6 @@ start124:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 21                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 22                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -3669,7 +3110,7 @@ start124:
         JMP start124                     ; else continue
 end124:        
         
-        add ebx, 21                      ; move cell-pointer (increment)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3679,35 +3120,7 @@ end124:
 start125:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 21                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end125                        ; if cell is zero jump to end
-        JMP start125                     ; else continue
-end125:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3717,51 +3130,15 @@ end125:
 start126:
                 
             
-        add ebx, 2                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end127                        ; if cell is zero, don't enter scope
-start127:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end127                        ; if cell is zero jump to end
-        JMP start127                     ; else continue
-end127:        
-        
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end128                        ; if cell is zero, don't enter scope
-start128:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end128                        ; if cell is zero jump to end
-        JMP start128                     ; else continue
-end128:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3771,7 +3148,70 @@ end128:
         JMP start126                     ; else continue
 end126:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end127                        ; if cell is zero, don't enter scope
+start127:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end127                        ; if cell is zero jump to end
+        JMP start127                     ; else continue
+end127:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end125                        ; if cell is zero jump to end
+        JMP start125                     ; else continue
+end125:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end128                        ; if cell is zero, don't enter scope
+start128:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end128                        ; if cell is zero jump to end
+        JMP start128                     ; else continue
+end128:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3781,17 +3221,7 @@ end126:
 start129:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end129                        ; if cell is zero jump to end
-        JMP start129                     ; else continue
-end129:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3804,7 +3234,12 @@ start130:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3814,7 +3249,17 @@ start130:
         JMP start130                     ; else continue
 end130:        
         
-        add ebx, 15                      ; move cell-pointer (increment)
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end129                        ; if cell is zero jump to end
+        JMP start129                     ; else continue
+end129:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3824,7 +3269,19 @@ end130:
 start131:
                 
             
-        mov eax, 6                     ; add n to current cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end131                        ; if cell is zero jump to end
+        JMP start131                     ; else continue
+end131:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
         call add                       ; add value to cell
 
 ; scope
@@ -3835,35 +3292,6 @@ start131:
 start132:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end132                        ; if cell is zero jump to end
-        JMP start132                     ; else continue
-end132:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 7                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -3872,8 +3300,7 @@ end132:
 start133:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -3883,7 +3310,10 @@ start133:
         JMP start133                     ; else continue
 end133:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3904,15 +3334,7 @@ start134:
         JMP start134                     ; else continue
 end134:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end131                        ; if cell is zero jump to end
-        JMP start131                     ; else continue
-end131:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3922,8 +3344,18 @@ end131:
 start135:
                 
             
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end135                        ; if cell is zero jump to end
+        JMP start135                     ; else continue
+end135:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3936,13 +3368,6 @@ start136:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -3952,18 +3377,6 @@ start136:
 end136:        
         
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 4                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -3984,7 +3397,7 @@ start137:
         JMP start137                     ; else continue
 end137:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4005,15 +3418,7 @@ start138:
         JMP start138                     ; else continue
 end138:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end135                        ; if cell is zero jump to end
-        JMP start135                     ; else continue
-end135:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4023,8 +3428,18 @@ end135:
 start139:
                 
             
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end139                        ; if cell is zero jump to end
+        JMP start139                     ; else continue
+end139:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4037,13 +3452,6 @@ start140:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4053,18 +3461,6 @@ start140:
 end140:        
         
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4085,7 +3481,7 @@ start141:
         JMP start141                     ; else continue
 end141:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4106,15 +3502,7 @@ start142:
         JMP start142                     ; else continue
 end142:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end139                        ; if cell is zero jump to end
-        JMP start139                     ; else continue
-end139:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4124,7 +3512,30 @@ end139:
 start143:
                 
             
-        mov eax, 5                     ; add n to current cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end143                        ; if cell is zero jump to end
+        JMP start143                     ; else continue
+end143:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end132                        ; if cell is zero jump to end
+        JMP start132                     ; else continue
+end132:        
+        
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
 ; scope
@@ -4135,15 +3546,12 @@ start143:
 start144:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4153,19 +3561,7 @@ start144:
         JMP start144                     ; else continue
 end144:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4175,8 +3571,7 @@ end144:
 start145:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4186,7 +3581,7 @@ start145:
         JMP start145                     ; else continue
 end145:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4196,26 +3591,12 @@ end145:
 start146:
                 
             
+        add ebx, 1                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end146                        ; if cell is zero jump to end
-        JMP start146                     ; else continue
-end146:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end143                        ; if cell is zero jump to end
-        JMP start143                     ; else continue
-end143:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4225,8 +3606,25 @@ end143:
 start147:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end147                        ; if cell is zero jump to end
+        JMP start147                     ; else continue
+end147:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4239,30 +3637,12 @@ start148:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end148                        ; if cell is zero jump to end
-        JMP start148                     ; else continue
-end148:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4275,28 +3655,7 @@ start149:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end149                        ; if cell is zero jump to end
-        JMP start149                     ; else continue
-end149:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4309,6 +3668,13 @@ start150:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4317,7 +3683,7 @@ start150:
         JMP start150                     ; else continue
 end150:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4330,6 +3696,18 @@ start151:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4338,15 +3716,20 @@ start151:
         JMP start151                     ; else continue
 end151:        
         
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end147                        ; if cell is zero jump to end
-        JMP start147                     ; else continue
-end147:        
+        JE end149                        ; if cell is zero jump to end
+        JMP start149                     ; else continue
+end149:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4356,8 +3739,25 @@ end147:
 start152:
                 
             
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end152                        ; if cell is zero jump to end
+        JMP start152                     ; else continue
+end152:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end148                        ; if cell is zero jump to end
+        JMP start148                     ; else continue
+end148:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4367,15 +3767,7 @@ start152:
 start153:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4385,15 +3777,7 @@ start153:
         JMP start153                     ; else continue
 end153:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4403,31 +3787,7 @@ end153:
 start154:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end154                        ; if cell is zero jump to end
-        JMP start154                     ; else continue
-end154:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4440,6 +3800,13 @@ start155:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4448,7 +3815,17 @@ start155:
         JMP start155                     ; else continue
 end155:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end154                        ; if cell is zero jump to end
+        JMP start154                     ; else continue
+end154:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4461,6 +3838,13 @@ start156:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4469,15 +3853,22 @@ start156:
         JMP start156                     ; else continue
 end156:        
         
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end152                        ; if cell is zero jump to end
-        JMP start152                     ; else continue
-end152:        
+        JE end146                        ; if cell is zero jump to end
+        JMP start146                     ; else continue
+end146:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4487,8 +3878,7 @@ end152:
 start157:
                 
             
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4501,13 +3891,6 @@ start158:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4516,15 +3899,12 @@ start158:
         JMP start158                     ; else continue
 end158:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4537,28 +3917,12 @@ start159:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end159                        ; if cell is zero jump to end
-        JMP start159                     ; else continue
-end159:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4568,8 +3932,22 @@ end159:
 start160:
                 
             
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4592,6 +3970,13 @@ start161:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4600,15 +3985,17 @@ start161:
         JMP start161                     ; else continue
 end161:        
         
+        add ebx, 3                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end157                        ; if cell is zero jump to end
-        JMP start157                     ; else continue
-end157:        
+        JE end159                        ; if cell is zero jump to end
+        JMP start159                     ; else continue
+end159:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4618,8 +4005,40 @@ end157:
 start162:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end162                        ; if cell is zero jump to end
+        JMP start162                     ; else continue
+end162:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end157                        ; if cell is zero jump to end
+        JMP start157                     ; else continue
+end157:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4629,31 +4048,7 @@ start162:
 start163:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end163                        ; if cell is zero jump to end
-        JMP start163                     ; else continue
-end163:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4666,6 +4061,13 @@ start164:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4674,7 +4076,7 @@ start164:
         JMP start164                     ; else continue
 end164:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4687,6 +4089,18 @@ start165:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4695,15 +4109,17 @@ start165:
         JMP start165                     ; else continue
 end165:        
         
+        add ebx, 8                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end162                        ; if cell is zero jump to end
-        JMP start162                     ; else continue
-end162:        
+        JE end163                        ; if cell is zero jump to end
+        JMP start163                     ; else continue
+end163:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4713,8 +4129,17 @@ end162:
 start166:
                 
             
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end166                        ; if cell is zero jump to end
+        JMP start166                     ; else continue
+end166:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4724,15 +4149,12 @@ start166:
 start167:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4742,13 +4164,7 @@ start167:
         JMP start167                     ; else continue
 end167:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4758,8 +4174,7 @@ end167:
 start168:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4769,7 +4184,7 @@ start168:
         JMP start168                     ; else continue
 end168:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4779,26 +4194,12 @@ end168:
 start169:
                 
             
+        add ebx, 1                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end169                        ; if cell is zero jump to end
-        JMP start169                     ; else continue
-end169:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end166                        ; if cell is zero jump to end
-        JMP start166                     ; else continue
-end166:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4808,8 +4209,25 @@ end166:
 start170:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end170                        ; if cell is zero jump to end
+        JMP start170                     ; else continue
+end170:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4822,28 +4240,12 @@ start171:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end171                        ; if cell is zero jump to end
-        JMP start171                     ; else continue
-end171:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4856,15 +4258,7 @@ start172:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end172                        ; if cell is zero jump to end
-        JMP start172                     ; else continue
-end172:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4877,6 +4271,13 @@ start173:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -4885,15 +4286,7 @@ start173:
         JMP start173                     ; else continue
 end173:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end170                        ; if cell is zero jump to end
-        JMP start170                     ; else continue
-end170:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4903,8 +4296,43 @@ end170:
 start174:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end174                        ; if cell is zero jump to end
+        JMP start174                     ; else continue
+end174:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end172                        ; if cell is zero jump to end
+        JMP start172                     ; else continue
+end172:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4914,15 +4342,7 @@ start174:
 start175:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4932,13 +4352,15 @@ start175:
         JMP start175                     ; else continue
 end175:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end171                        ; if cell is zero jump to end
+        JMP start171                     ; else continue
+end171:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4948,8 +4370,7 @@ end175:
 start176:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -4959,7 +4380,7 @@ start176:
         JMP start176                     ; else continue
 end176:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4969,26 +4390,7 @@ end176:
 start177:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end177                        ; if cell is zero jump to end
-        JMP start177                     ; else continue
-end177:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end174                        ; if cell is zero jump to end
-        JMP start174                     ; else continue
-end174:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -4998,8 +4400,35 @@ end174:
 start178:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end178                        ; if cell is zero jump to end
+        JMP start178                     ; else continue
+end178:        
+        
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end177                        ; if cell is zero jump to end
+        JMP start177                     ; else continue
+end177:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5012,12 +4441,12 @@ start179:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5027,13 +4456,22 @@ start179:
         JMP start179                     ; else continue
 end179:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end169                        ; if cell is zero jump to end
+        JMP start169                     ; else continue
+end169:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5043,18 +4481,7 @@ end179:
 start180:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end180                        ; if cell is zero jump to end
-        JMP start180                     ; else continue
-end180:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5075,15 +4502,12 @@ start181:
         JMP start181                     ; else continue
 end181:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end178                        ; if cell is zero jump to end
-        JMP start178                     ; else continue
-end178:        
-        
         sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5093,8 +4517,15 @@ end178:
 start182:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5104,15 +4535,22 @@ start182:
 start183:
                 
             
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5122,13 +4560,7 @@ start183:
         JMP start183                     ; else continue
 end183:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5141,6 +4573,13 @@ start184:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5149,7 +4588,17 @@ start184:
         JMP start184                     ; else continue
 end184:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end182                        ; if cell is zero jump to end
+        JMP start182                     ; else continue
+end182:        
+        
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5162,6 +4611,13 @@ start185:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5170,15 +4626,22 @@ start185:
         JMP start185                     ; else continue
 end185:        
         
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end182                        ; if cell is zero jump to end
-        JMP start182                     ; else continue
-end182:        
+        JE end180                        ; if cell is zero jump to end
+        JMP start180                     ; else continue
+end180:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5188,8 +4651,7 @@ end182:
 start186:
                 
             
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5202,12 +4664,12 @@ start187:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 36                      ; move cell-pointer (decrement)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 36                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5217,13 +4679,17 @@ start187:
         JMP start187                     ; else continue
 end187:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end186                        ; if cell is zero jump to end
+        JMP start186                     ; else continue
+end186:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5233,8 +4699,7 @@ end187:
 start188:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5244,7 +4709,7 @@ start188:
         JMP start188                     ; else continue
 end188:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5254,27 +4719,7 @@ end188:
 start189:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end189                        ; if cell is zero jump to end
-        JMP start189                     ; else continue
-end189:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end186                        ; if cell is zero jump to end
-        JMP start186                     ; else continue
-end186:        
-        
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5287,12 +4732,12 @@ start190:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 36                      ; move cell-pointer (decrement)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 36                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5302,19 +4747,17 @@ start190:
         JMP start190                     ; else continue
 end190:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 6                      ; move cell-pointer (increment)
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end189                        ; if cell is zero jump to end
+        JMP start189                     ; else continue
+end189:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5324,8 +4767,7 @@ end190:
 start191:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5335,7 +4777,10 @@ start191:
         JMP start191                     ; else continue
 end191:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5345,6 +4790,51 @@ end191:
 start192:
                 
             
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end193                        ; if cell is zero, don't enter scope
+start193:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end193                        ; if cell is zero jump to end
+        JMP start193                     ; else continue
+end193:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end194                        ; if cell is zero, don't enter scope
+start194:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end194                        ; if cell is zero jump to end
+        JMP start194                     ; else continue
+end194:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -5356,75 +4846,7 @@ start192:
         JMP start192                     ; else continue
 end192:        
         
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end193                        ; if cell is zero, don't enter scope
-start193:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end193                        ; if cell is zero jump to end
-        JMP start193                     ; else continue
-end193:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end123                        ; if cell is zero jump to end
-        JMP start123                     ; else continue
-end123:        
-        
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end194                        ; if cell is zero, don't enter scope
-start194:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end194                        ; if cell is zero jump to end
-        JMP start194                     ; else continue
-end194:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
         call add                       ; add value to cell
 
 ; scope
@@ -5435,7 +4857,7 @@ end194:
 start195:
                 
             
-        sub ebx, 17                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5448,17 +4870,12 @@ start196:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 21                      ; move cell-pointer (increment)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 22                      ; move cell-pointer (decrement)
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5468,7 +4885,7 @@ start196:
         JMP start196                     ; else continue
 end196:        
         
-        add ebx, 21                      ; move cell-pointer (increment)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5481,12 +4898,17 @@ start197:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 21                      ; move cell-pointer (decrement)
+        add ebx, 7                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 21                      ; move cell-pointer (increment)
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5496,17 +4918,17 @@ start197:
         JMP start197                     ; else continue
 end197:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end195                        ; if cell is zero jump to end
+        JMP start195                     ; else continue
+end195:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5516,51 +4938,7 @@ end197:
 start198:
                 
             
-        add ebx, 2                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end199                        ; if cell is zero, don't enter scope
-start199:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end199                        ; if cell is zero jump to end
-        JMP start199                     ; else continue
-end199:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end200                        ; if cell is zero, don't enter scope
-start200:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end200                        ; if cell is zero jump to end
-        JMP start200                     ; else continue
-end200:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5570,7 +4948,48 @@ end200:
         JMP start198                     ; else continue
 end198:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end199                        ; if cell is zero, don't enter scope
+start199:
+                
+            
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end200                        ; if cell is zero, don't enter scope
+start200:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end200                        ; if cell is zero jump to end
+        JMP start200                     ; else continue
+end200:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end199                        ; if cell is zero jump to end
+        JMP start199                     ; else continue
+end199:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5580,7 +4999,7 @@ end198:
 start201:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5590,7 +5009,12 @@ start201:
         JMP start201                     ; else continue
 end201:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5605,6 +5029,16 @@ start202:
 
         sub ebx, 1                      ; move cell-pointer (decrement)
 
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5613,7 +5047,7 @@ start202:
         JMP start202                     ; else continue
 end202:        
         
-        add ebx, 15                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5623,8 +5057,10 @@ end202:
 start203:
                 
             
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5637,12 +5073,17 @@ start204:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 2                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5652,19 +5093,7 @@ start204:
         JMP start204                     ; else continue
 end204:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 7                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5677,6 +5106,13 @@ start205:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5687,25 +5123,16 @@ end205:
         
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end206                        ; if cell is zero, don't enter scope
-start206:
-                
-            
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end206                        ; if cell is zero jump to end
-        JMP start206                     ; else continue
-end206:        
-        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5720,12 +5147,57 @@ end203:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
+        JE end206                        ; if cell is zero, don't enter scope
+start206:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end206                        ; if cell is zero jump to end
+        JMP start206                     ; else continue
+end206:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
         JE end207                        ; if cell is zero, don't enter scope
 start207:
                 
             
-        mov eax, 6                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end207                        ; if cell is zero jump to end
+        JMP start207                     ; else continue
+end207:        
+        
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5738,13 +5210,6 @@ start208:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5753,19 +5218,12 @@ start208:
         JMP start208                     ; else continue
 end208:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5778,6 +5236,13 @@ start209:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5786,7 +5251,10 @@ start209:
         JMP start209                     ; else continue
 end209:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5799,23 +5267,12 @@ start210:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end210                        ; if cell is zero jump to end
-        JMP start210                     ; else continue
-end210:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end207                        ; if cell is zero jump to end
-        JMP start207                     ; else continue
-end207:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5825,8 +5282,7 @@ end207:
 start211:
                 
             
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5839,12 +5295,12 @@ start212:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5854,19 +5310,10 @@ start212:
         JMP start212                     ; else continue
 end212:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5879,15 +5326,12 @@ start213:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end213                        ; if cell is zero jump to end
-        JMP start213                     ; else continue
-end213:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5900,6 +5344,13 @@ start214:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -5908,15 +5359,7 @@ start214:
         JMP start214                     ; else continue
 end214:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end211                        ; if cell is zero jump to end
-        JMP start211                     ; else continue
-end211:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5926,8 +5369,15 @@ end211:
 start215:
                 
             
-        mov eax, 5                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 12                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5937,15 +5387,7 @@ start215:
 start216:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -5955,19 +5397,7 @@ start216:
         JMP start216                     ; else continue
 end216:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5988,7 +5418,10 @@ start217:
         JMP start217                     ; else continue
 end217:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -5998,8 +5431,7 @@ end217:
 start218:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6009,6 +5441,13 @@ start218:
         JMP start218                     ; else continue
 end218:        
         
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6017,7 +5456,18 @@ end218:
         JMP start215                     ; else continue
 end215:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end213                        ; if cell is zero jump to end
+        JMP start213                     ; else continue
+end213:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6027,8 +5477,28 @@ end215:
 start219:
                 
             
-        mov eax, 5                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end219                        ; if cell is zero jump to end
+        JMP start219                     ; else continue
+end219:        
+        
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6041,34 +5511,12 @@ start220:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end220                        ; if cell is zero jump to end
-        JMP start220                     ; else continue
-end220:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6081,6 +5529,13 @@ start221:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6089,7 +5544,7 @@ start221:
         JMP start221                     ; else continue
 end221:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6102,23 +5557,12 @@ start222:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end222                        ; if cell is zero jump to end
-        JMP start222                     ; else continue
-end222:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end219                        ; if cell is zero jump to end
-        JMP start219                     ; else continue
-end219:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 11                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6128,8 +5572,17 @@ end219:
 start223:
                 
             
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end223                        ; if cell is zero jump to end
+        JMP start223                     ; else continue
+end223:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6142,13 +5595,6 @@ start224:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6157,19 +5603,10 @@ start224:
         JMP start224                     ; else continue
 end224:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6179,8 +5616,7 @@ end224:
 start225:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6190,7 +5626,7 @@ start225:
         JMP start225                     ; else continue
 end225:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6211,15 +5647,31 @@ start226:
         JMP start226                     ; else continue
 end226:        
         
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end223                        ; if cell is zero jump to end
-        JMP start223                     ; else continue
-end223:        
+        JE end222                        ; if cell is zero jump to end
+        JMP start222                     ; else continue
+end222:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end220                        ; if cell is zero jump to end
+        JMP start220                     ; else continue
+end220:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6229,8 +5681,10 @@ end223:
 start227:
                 
             
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6240,15 +5694,7 @@ start227:
 start228:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6258,19 +5704,27 @@ start228:
         JMP start228                     ; else continue
 end228:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end227                        ; if cell is zero jump to end
+        JMP start227                     ; else continue
+end227:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end211                        ; if cell is zero jump to end
+        JMP start211                     ; else continue
+end211:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6280,8 +5734,7 @@ end228:
 start229:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6291,7 +5744,7 @@ start229:
         JMP start229                     ; else continue
 end229:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6304,6 +5757,13 @@ start230:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6312,15 +5772,7 @@ start230:
         JMP start230                     ; else continue
 end230:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end227                        ; if cell is zero jump to end
-        JMP start227                     ; else continue
-end227:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6330,8 +5782,15 @@ end227:
 start231:
                 
             
-        mov eax, 5                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6341,37 +5800,12 @@ start231:
 start232:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end232                        ; if cell is zero jump to end
-        JMP start232                     ; else continue
-end232:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6384,6 +5818,13 @@ start233:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6392,7 +5833,7 @@ start233:
         JMP start233                     ; else continue
 end233:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6405,6 +5846,13 @@ start234:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6413,14 +5861,21 @@ start234:
         JMP start234                     ; else continue
 end234:        
         
+        add ebx, 8                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end231                        ; if cell is zero jump to end
-        JMP start231                     ; else continue
-end231:        
+        JE end232                        ; if cell is zero jump to end
+        JMP start232                     ; else continue
+end232:        
         
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
@@ -6431,8 +5886,7 @@ end231:
 start235:
                 
             
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6445,34 +5899,12 @@ start236:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end236                        ; if cell is zero jump to end
-        JMP start236                     ; else continue
-end236:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6485,15 +5917,17 @@ start237:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end237                        ; if cell is zero jump to end
-        JMP start237                     ; else continue
-end237:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6506,6 +5940,13 @@ start238:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6514,15 +5955,17 @@ start238:
         JMP start238                     ; else continue
 end238:        
         
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end235                        ; if cell is zero jump to end
-        JMP start235                     ; else continue
-end235:        
+        JE end237                        ; if cell is zero jump to end
+        JMP start237                     ; else continue
+end237:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6532,8 +5975,40 @@ end235:
 start239:
                 
             
-        mov eax, 5                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end239                        ; if cell is zero jump to end
+        JMP start239                     ; else continue
+end239:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end236                        ; if cell is zero jump to end
+        JMP start236                     ; else continue
+end236:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6546,34 +6021,12 @@ start240:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end240                        ; if cell is zero jump to end
-        JMP start240                     ; else continue
-end240:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6586,6 +6039,18 @@ start241:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6595,6 +6060,16 @@ start241:
 end241:        
         
         sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end240                        ; if cell is zero jump to end
+        JMP start240                     ; else continue
+end240:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6607,6 +6082,13 @@ start242:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6615,15 +6097,17 @@ start242:
         JMP start242                     ; else continue
 end242:        
         
+        sub ebx, 12                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end239                        ; if cell is zero jump to end
-        JMP start239                     ; else continue
-end239:        
+        JE end235                        ; if cell is zero jump to end
+        JMP start235                     ; else continue
+end235:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6633,8 +6117,28 @@ end239:
 start243:
                 
             
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end243                        ; if cell is zero jump to end
+        JMP start243                     ; else continue
+end243:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end231                        ; if cell is zero jump to end
+        JMP start231                     ; else continue
+end231:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6647,12 +6151,12 @@ start244:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6662,15 +6166,7 @@ start244:
         JMP start244                     ; else continue
 end244:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6683,28 +6179,12 @@ start245:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end245                        ; if cell is zero jump to end
-        JMP start245                     ; else continue
-end245:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6714,18 +6194,12 @@ end245:
 start246:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end246                        ; if cell is zero jump to end
-        JMP start246                     ; else continue
-end246:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6738,6 +6212,13 @@ start247:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -6745,14 +6226,6 @@ start247:
         JE end247                        ; if cell is zero jump to end
         JMP start247                     ; else continue
 end247:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end243                        ; if cell is zero jump to end
-        JMP start243                     ; else continue
-end243:        
         
         sub ebx, 1                      ; move cell-pointer (decrement)
 
@@ -6764,8 +6237,40 @@ end243:
 start248:
                 
             
-        mov eax, 3                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end248                        ; if cell is zero jump to end
+        JMP start248                     ; else continue
+end248:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end246                        ; if cell is zero jump to end
+        JMP start246                     ; else continue
+end246:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6775,33 +6280,7 @@ start248:
 start249:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end249                        ; if cell is zero jump to end
-        JMP start249                     ; else continue
-end249:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6814,28 +6293,12 @@ start250:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end250                        ; if cell is zero jump to end
-        JMP start250                     ; else continue
-end250:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6847,6 +6310,46 @@ start251:
             
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 10                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end252                        ; if cell is zero, don't enter scope
+start252:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end252                        ; if cell is zero jump to end
+        JMP start252                     ; else continue
+end252:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6862,41 +6365,44 @@ end251:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
-        JE end252                        ; if cell is zero, don't enter scope
-start252:
+        JE end253                        ; if cell is zero, don't enter scope
+start253:
                 
             
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 10                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end252                        ; if cell is zero jump to end
-        JMP start252                     ; else continue
-end252:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end248                        ; if cell is zero jump to end
-        JMP start248                     ; else continue
-end248:        
+        JE end253                        ; if cell is zero jump to end
+        JMP start253                     ; else continue
+end253:        
         
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-; scope
+; scope end
         mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end253                        ; if cell is zero, don't enter scope
-start253:
-                
-            
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end250                        ; if cell is zero jump to end
+        JMP start250                     ; else continue
+end250:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6909,30 +6415,12 @@ start254:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end254                        ; if cell is zero jump to end
-        JMP start254                     ; else continue
-end254:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6945,12 +6433,17 @@ start255:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 10                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -6962,11 +6455,15 @@ end255:
         
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end254                        ; if cell is zero jump to end
+        JMP start254                     ; else continue
+end254:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -6974,309 +6471,6 @@ end255:
         cmp [edx], byte 0x0            ; compare with zero
         JE end256                        ; if cell is zero, don't enter scope
 start256:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end256                        ; if cell is zero jump to end
-        JMP start256                     ; else continue
-end256:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end257                        ; if cell is zero, don't enter scope
-start257:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end257                        ; if cell is zero jump to end
-        JMP start257                     ; else continue
-end257:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end253                        ; if cell is zero jump to end
-        JMP start253                     ; else continue
-end253:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end258                        ; if cell is zero, don't enter scope
-start258:
-                
-            
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end259                        ; if cell is zero, don't enter scope
-start259:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end259                        ; if cell is zero jump to end
-        JMP start259                     ; else continue
-end259:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 13                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end260                        ; if cell is zero, don't enter scope
-start260:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end260                        ; if cell is zero jump to end
-        JMP start260                     ; else continue
-end260:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end261                        ; if cell is zero, don't enter scope
-start261:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end261                        ; if cell is zero jump to end
-        JMP start261                     ; else continue
-end261:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end258                        ; if cell is zero jump to end
-        JMP start258                     ; else continue
-end258:        
-        
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end262                        ; if cell is zero, don't enter scope
-start262:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end262                        ; if cell is zero jump to end
-        JMP start262                     ; else continue
-end262:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end263                        ; if cell is zero, don't enter scope
-start263:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end263                        ; if cell is zero jump to end
-        JMP start263                     ; else continue
-end263:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end264                        ; if cell is zero, don't enter scope
-start264:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end264                        ; if cell is zero jump to end
-        JMP start264                     ; else continue
-end264:        
-        
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end265                        ; if cell is zero, don't enter scope
-start265:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end265                        ; if cell is zero jump to end
-        JMP start265                     ; else continue
-end265:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end195                        ; if cell is zero jump to end
-        JMP start195                     ; else continue
-end195:        
-        
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end266                        ; if cell is zero, don't enter scope
-start266:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end266                        ; if cell is zero jump to end
-        JMP start266                     ; else continue
-end266:        
-        
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end267                        ; if cell is zero, don't enter scope
-start267:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -7293,31 +6487,349 @@ start267:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end267                        ; if cell is zero jump to end
-        JMP start267                     ; else continue
-end267:        
+        JE end256                        ; if cell is zero jump to end
+        JMP start256                     ; else continue
+end256:        
         
+        sub ebx, 11                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end249                        ; if cell is zero jump to end
+        JMP start249                     ; else continue
+end249:        
+        
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end245                        ; if cell is zero jump to end
+        JMP start245                     ; else continue
+end245:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end210                        ; if cell is zero jump to end
+        JMP start210                     ; else continue
+end210:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end257                        ; if cell is zero, don't enter scope
+start257:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end122                        ; if cell is zero jump to end
-        JMP start122                     ; else continue
-end122:        
+        JE end257                        ; if cell is zero jump to end
+        JMP start257                     ; else continue
+end257:        
         
-        sub ebx, 16                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end258                        ; if cell is zero, don't enter scope
+start258:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 36                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 36                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end259                        ; if cell is zero, don't enter scope
+start259:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end259                        ; if cell is zero jump to end
+        JMP start259                     ; else continue
+end259:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end260                        ; if cell is zero, don't enter scope
+start260:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end261                        ; if cell is zero, don't enter scope
+start261:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end262                        ; if cell is zero, don't enter scope
+start262:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end263                        ; if cell is zero, don't enter scope
+start263:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end263                        ; if cell is zero jump to end
+        JMP start263                     ; else continue
+end263:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end262                        ; if cell is zero jump to end
+        JMP start262                     ; else continue
+end262:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end264                        ; if cell is zero, don't enter scope
+start264:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end264                        ; if cell is zero jump to end
+        JMP start264                     ; else continue
+end264:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end261                        ; if cell is zero jump to end
+        JMP start261                     ; else continue
+end261:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end265                        ; if cell is zero, don't enter scope
+start265:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end266                        ; if cell is zero, don't enter scope
+start266:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end266                        ; if cell is zero jump to end
+        JMP start266                     ; else continue
+end266:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end265                        ; if cell is zero jump to end
+        JMP start265                     ; else continue
+end265:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end267                        ; if cell is zero, don't enter scope
+start267:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end267                        ; if cell is zero jump to end
+        JMP start267                     ; else continue
+end267:        
+        
+        sub ebx, 12                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end260                        ; if cell is zero jump to end
+        JMP start260                     ; else continue
+end260:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end258                        ; if cell is zero jump to end
+        JMP start258                     ; else continue
+end258:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7327,7 +6839,18 @@ end122:
 start268:
                 
             
-        sub ebx, 16                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end268                        ; if cell is zero jump to end
+        JMP start268                     ; else continue
+end268:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7340,18 +6863,6 @@ start269:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 17                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 18                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -7360,7 +6871,7 @@ start269:
         JMP start269                     ; else continue
 end269:        
         
-        add ebx, 18                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7373,13 +6884,6 @@ start270:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 18                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 18                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -7388,12 +6892,7 @@ start270:
         JMP start270                     ; else continue
 end270:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7403,9 +6902,6 @@ end270:
 start271:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
@@ -7416,7 +6912,8 @@ start271:
 start272:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7426,8 +6923,7 @@ start272:
         JMP start272                     ; else continue
 end272:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7437,7 +6933,8 @@ end272:
 start273:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7447,7 +6944,7 @@ start273:
         JMP start273                     ; else continue
 end273:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7457,7 +6954,7 @@ end273:
         JMP start271                     ; else continue
 end271:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7467,7 +6964,7 @@ end271:
 start274:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7477,7 +6974,7 @@ start274:
         JMP start274                     ; else continue
 end274:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7487,20 +6984,7 @@ end274:
 start275:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end275                        ; if cell is zero jump to end
-        JMP start275                     ; else continue
-end275:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7513,6 +6997,13 @@ start276:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -7521,7 +7012,7 @@ start276:
         JMP start276                     ; else continue
 end276:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7531,10 +7022,40 @@ end276:
 start277:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end277                        ; if cell is zero jump to end
+        JMP start277                     ; else continue
+end277:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end275                        ; if cell is zero jump to end
+        JMP start275                     ; else continue
+end275:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7544,13 +7065,7 @@ start277:
 start278:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7560,18 +7075,10 @@ start278:
         JMP start278                     ; else continue
 end278:        
         
-        mov eax, 1                     ; add n to current cell
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
         call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7581,32 +7088,6 @@ end278:
 start279:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end279                        ; if cell is zero jump to end
-        JMP start279                     ; else continue
-end279:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end277                        ; if cell is zero jump to end
-        JMP start277                     ; else continue
-end277:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -7615,10 +7096,20 @@ end277:
 start280:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end280                        ; if cell is zero jump to end
+        JMP start280                     ; else continue
+end280:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7628,11 +7119,6 @@ start280:
 start281:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -7644,18 +7130,7 @@ start281:
         JMP start281                     ; else continue
 end281:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7665,11 +7140,6 @@ end281:
 start282:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -7681,14 +7151,6 @@ start282:
         JMP start282                     ; else continue
 end282:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end280                        ; if cell is zero jump to end
-        JMP start280                     ; else continue
-end280:        
-        
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -7699,72 +7161,9 @@ end280:
 start283:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end284                        ; if cell is zero, don't enter scope
-start284:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end284                        ; if cell is zero jump to end
-        JMP start284                     ; else continue
-end284:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end285                        ; if cell is zero, don't enter scope
-start285:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end285                        ; if cell is zero jump to end
-        JMP start285                     ; else continue
-end285:        
-        
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -7779,81 +7178,55 @@ end283:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
+        JE end284                        ; if cell is zero, don't enter scope
+start284:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end284                        ; if cell is zero jump to end
+        JMP start284                     ; else continue
+end284:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end285                        ; if cell is zero, don't enter scope
+start285:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end285                        ; if cell is zero jump to end
+        JMP start285                     ; else continue
+end285:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
         JE end286                        ; if cell is zero, don't enter scope
 start286:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end287                        ; if cell is zero, don't enter scope
-start287:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end287                        ; if cell is zero jump to end
-        JMP start287                     ; else continue
-end287:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end288                        ; if cell is zero, don't enter scope
-start288:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end288                        ; if cell is zero jump to end
-        JMP start288                     ; else continue
-end288:        
-        
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -7868,14 +7241,64 @@ end286:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
+        JE end287                        ; if cell is zero, don't enter scope
+start287:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end287                        ; if cell is zero jump to end
+        JMP start287                     ; else continue
+end287:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end288                        ; if cell is zero, don't enter scope
+start288:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end288                        ; if cell is zero jump to end
+        JMP start288                     ; else continue
+end288:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
         JE end289                        ; if cell is zero, don't enter scope
 start289:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end289                        ; if cell is zero jump to end
+        JMP start289                     ; else continue
+end289:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7885,13 +7308,7 @@ start289:
 start290:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7901,23 +7318,21 @@ start290:
         JMP start290                     ; else continue
 end290:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end279                        ; if cell is zero jump to end
+        JMP start279                     ; else continue
+end279:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7927,13 +7342,12 @@ end290:
 start291:
                 
             
+        add ebx, 1                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -7943,15 +7357,7 @@ start291:
         JMP start291                     ; else continue
 end291:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end289                        ; if cell is zero jump to end
-        JMP start289                     ; else continue
-end289:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7961,10 +7367,17 @@ end289:
 start292:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end292                        ; if cell is zero jump to end
+        JMP start292                     ; else continue
+end292:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -7974,39 +7387,12 @@ start292:
 start293:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end293                        ; if cell is zero jump to end
-        JMP start293                     ; else continue
-end293:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8016,13 +7402,15 @@ end293:
 start294:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8032,15 +7420,7 @@ start294:
         JMP start294                     ; else continue
 end294:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end292                        ; if cell is zero jump to end
-        JMP start292                     ; else continue
-end292:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8050,10 +7430,15 @@ end292:
 start295:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8063,44 +7448,10 @@ start295:
 start296:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end296                        ; if cell is zero jump to end
-        JMP start296                     ; else continue
-end296:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8110,13 +7461,15 @@ end296:
 start297:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8126,15 +7479,7 @@ start297:
         JMP start297                     ; else continue
 end297:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end295                        ; if cell is zero jump to end
-        JMP start295                     ; else continue
-end295:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8144,10 +7489,43 @@ end295:
 start298:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end298                        ; if cell is zero jump to end
+        JMP start298                     ; else continue
+end298:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end296                        ; if cell is zero jump to end
+        JMP start296                     ; else continue
+end296:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8157,13 +7535,7 @@ start298:
 start299:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8173,28 +7545,15 @@ start299:
         JMP start299                     ; else continue
 end299:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end295                        ; if cell is zero jump to end
+        JMP start295                     ; else continue
+end295:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8204,13 +7563,7 @@ end299:
 start300:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8220,15 +7573,7 @@ start300:
         JMP start300                     ; else continue
 end300:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end298                        ; if cell is zero jump to end
-        JMP start298                     ; else continue
-end298:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8240,9 +7585,6 @@ start301:
             
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -8251,13 +7593,15 @@ start301:
 start302:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8267,53 +7611,8 @@ start302:
         JMP start302                     ; else continue
 end302:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 10                      ; move cell-pointer (decrement)
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end303                        ; if cell is zero, don't enter scope
-start303:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end303                        ; if cell is zero jump to end
-        JMP start303                     ; else continue
-end303:        
-        
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -8328,14 +7627,54 @@ end301:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
+        JE end303                        ; if cell is zero, don't enter scope
+start303:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end303                        ; if cell is zero jump to end
+        JMP start303                     ; else continue
+end303:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end293                        ; if cell is zero jump to end
+        JMP start293                     ; else continue
+end293:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
         JE end304                        ; if cell is zero, don't enter scope
 start304:
                 
             
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8345,11 +7684,6 @@ start304:
 start305:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -8361,28 +7695,12 @@ start305:
         JMP start305                     ; else continue
 end305:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8392,30 +7710,14 @@ end305:
 start306:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end306                        ; if cell is zero jump to end
-        JMP start306                     ; else continue
-end306:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end304                        ; if cell is zero jump to end
-        JMP start304                     ; else continue
-end304:        
-        
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -8426,10 +7728,32 @@ end304:
 start307:
                 
             
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end307                        ; if cell is zero jump to end
+        JMP start307                     ; else continue
+end307:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8439,13 +7763,15 @@ start307:
 start308:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8455,28 +7781,17 @@ start308:
         JMP start308                     ; else continue
 end308:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end306                        ; if cell is zero jump to end
+        JMP start306                     ; else continue
+end306:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8486,13 +7801,15 @@ end308:
 start309:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8502,15 +7819,22 @@ start309:
         JMP start309                     ; else continue
 end309:        
         
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end307                        ; if cell is zero jump to end
-        JMP start307                     ; else continue
-end307:        
+        JE end304                        ; if cell is zero jump to end
+        JMP start304                     ; else continue
+end304:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8520,10 +7844,7 @@ end307:
 start310:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8533,13 +7854,15 @@ start310:
 start311:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 36                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 36                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8549,28 +7872,17 @@ start311:
         JMP start311                     ; else continue
 end311:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 6                      ; move cell-pointer (increment)
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 9                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end310                        ; if cell is zero jump to end
+        JMP start310                     ; else continue
+end310:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8580,13 +7892,7 @@ end311:
 start312:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8596,15 +7902,7 @@ start312:
         JMP start312                     ; else continue
 end312:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end310                        ; if cell is zero jump to end
-        JMP start310                     ; else continue
-end310:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8614,10 +7912,21 @@ end310:
 start313:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end313                        ; if cell is zero jump to end
+        JMP start313                     ; else continue
+end313:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8627,10 +7936,50 @@ start313:
 start314:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end315                        ; if cell is zero, don't enter scope
+start315:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        add ebx, 1                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end315                        ; if cell is zero jump to end
+        JMP start315                     ; else continue
+end315:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end316                        ; if cell is zero, don't enter scope
+start316:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end316                        ; if cell is zero jump to end
+        JMP start316                     ; else continue
+end316:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
@@ -8646,114 +7995,6 @@ end314:
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 9                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end315                        ; if cell is zero, don't enter scope
-start315:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end315                        ; if cell is zero jump to end
-        JMP start315                     ; else continue
-end315:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end313                        ; if cell is zero jump to end
-        JMP start313                     ; else continue
-end313:        
-        
-        sub ebx, 16                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end316                        ; if cell is zero, don't enter scope
-start316:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end316                        ; if cell is zero jump to end
-        JMP start316                     ; else continue
-end316:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end268                        ; if cell is zero jump to end
-        JMP start268                     ; else continue
-end268:        
-        
-        add ebx, 20                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -8762,7 +8003,7 @@ end268:
 start317:
                 
             
-        add ebx, 5                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8775,70 +8016,12 @@ start318:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 9                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end319                        ; if cell is zero, don't enter scope
-start319:
-                
-            
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end319                        ; if cell is zero jump to end
-        JMP start319                     ; else continue
-end319:        
-        
-        add ebx, 2                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end320                        ; if cell is zero, don't enter scope
-start320:
-                
-            
-        sub ebx, 6                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end320                        ; if cell is zero jump to end
-        JMP start320                     ; else continue
-end320:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8848,7 +8031,56 @@ end320:
         JMP start318                     ; else continue
 end318:        
         
-        add ebx, 5                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end319                        ; if cell is zero, don't enter scope
+start319:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end320                        ; if cell is zero, don't enter scope
+start320:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end320                        ; if cell is zero jump to end
+        JMP start320                     ; else continue
+end320:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8861,25 +8093,12 @@ start321:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 5                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end321                        ; if cell is zero jump to end
-        JMP start321                     ; else continue
-end321:        
-        
-        sub ebx, 10                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 13                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8889,15 +8108,7 @@ end321:
 start322:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -8907,20 +8118,7 @@ start322:
         JMP start322                     ; else continue
 end322:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end317                        ; if cell is zero jump to end
-        JMP start317                     ; else continue
-end317:        
-        
-        add ebx, 6                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -8930,43 +8128,6 @@ end317:
 start323:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 6                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -8978,75 +8139,10 @@ start323:
         JMP start323                     ; else continue
 end323:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 6                      ; move cell-pointer (decrement)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9056,26 +8152,7 @@ end323:
 start324:
                 
             
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end325                        ; if cell is zero, don't enter scope
-start325:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end325                        ; if cell is zero jump to end
-        JMP start325                     ; else continue
-end325:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9087,8 +8164,62 @@ end324:
         
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 6                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end321                        ; if cell is zero jump to end
+        JMP start321                     ; else continue
+end321:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end319                        ; if cell is zero jump to end
+        JMP start319                     ; else continue
+end319:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end325                        ; if cell is zero, don't enter scope
+start325:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end325                        ; if cell is zero jump to end
+        JMP start325                     ; else continue
+end325:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9101,21 +8232,11 @@ start326:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end326                        ; if cell is zero jump to end
-        JMP start326                     ; else continue
-end326:        
-        
         sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
@@ -9129,32 +8250,12 @@ start327:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 5                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9164,7 +8265,7 @@ start327:
         JMP start327                     ; else continue
 end327:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9174,8 +8275,15 @@ end327:
 start328:
                 
             
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 12                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9185,8 +8293,7 @@ start328:
 start329:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9196,21 +8303,7 @@ start329:
         JMP start329                     ; else continue
 end329:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end328                        ; if cell is zero jump to end
-        JMP start328                     ; else continue
-end328:        
-        
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9231,10 +8324,10 @@ start330:
         JMP start330                     ; else continue
 end330:        
         
-        sub ebx, 36                      ; move cell-pointer (decrement)
-
-        mov eax, 10                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9244,175 +8337,7 @@ end330:
 start331:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 12                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 12                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 10                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 12                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 11                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 9                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 7                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 7                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 33                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9422,140 +8347,7 @@ start331:
         JMP start331                     ; else continue
 end331:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 5                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9565,7 +8357,8 @@ end331:
 start332:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9575,170 +8368,31 @@ start332:
         JMP start332                     ; else continue
 end332:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end328                        ; if cell is zero jump to end
+        JMP start328                     ; else continue
+end328:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end326                        ; if cell is zero jump to end
+        JMP start326                     ; else continue
+end326:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9748,6 +8402,11 @@ end332:
 start333:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -9756,8 +8415,7 @@ start333:
 start334:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9767,7 +8425,7 @@ start334:
         JMP start334                     ; else continue
 end334:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9777,10 +8435,17 @@ end334:
         JMP start333                     ; else continue
 end333:        
         
-        add ebx, 13                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end317                        ; if cell is zero jump to end
+        JMP start317                     ; else continue
+end317:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9790,16 +8455,17 @@ end333:
 start335:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
-        mov eax, 1  ; move number of characters to input into eax register
-        call input
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 8                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end335                        ; if cell is zero jump to end
+        JMP start335                     ; else continue
+end335:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9812,12 +8478,12 @@ start336:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
-        mov eax, 8                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9827,7 +8493,7 @@ start336:
         JMP start336                     ; else continue
 end336:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9840,7 +8506,12 @@ start337:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9852,16 +8523,10 @@ start338:
             
         add ebx, 1                      ; move cell-pointer (increment)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end338                        ; if cell is zero jump to end
-        JMP start338                     ; else continue
-end338:        
-        
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9871,7 +8536,15 @@ end338:
 start339:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9881,17 +8554,7 @@ start339:
         JMP start339                     ; else continue
 end339:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end337                        ; if cell is zero jump to end
-        JMP start337                     ; else continue
-end337:        
-        
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9901,7 +8564,15 @@ end337:
 start340:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -9911,7 +8582,22 @@ start340:
         JMP start340                     ; else continue
 end340:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end338                        ; if cell is zero jump to end
+        JMP start338                     ; else continue
+end338:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9921,25 +8607,7 @@ end340:
 start341:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end341                        ; if cell is zero jump to end
-        JMP start341                     ; else continue
-end341:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9949,25 +8617,15 @@ end341:
 start342:
                 
             
-        sub ebx, 5                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end342                        ; if cell is zero jump to end
-        JMP start342                     ; else continue
-end342:        
-        
-        add ebx, 3                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -9977,25 +8635,20 @@ end342:
 start343:
                 
             
-        sub ebx, 6                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 6                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end343                        ; if cell is zero jump to end
-        JMP start343                     ; else continue
-end343:        
-        
-        add ebx, 15                      ; move cell-pointer (increment)
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 12                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10005,13 +8658,35 @@ end343:
 start344:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end344                        ; if cell is zero jump to end
+        JMP start344                     ; else continue
+end344:        
+        
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end343                        ; if cell is zero jump to end
+        JMP start343                     ; else continue
+end343:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10021,13 +8696,20 @@ start344:
 start345:
                 
             
-        mov eax, 2                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 12                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10037,18 +8719,17 @@ start345:
         JMP start345                     ; else continue
 end345:        
         
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end342                        ; if cell is zero jump to end
+        JMP start342                     ; else continue
+end342:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10058,31 +8739,15 @@ end345:
 start346:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end346                        ; if cell is zero jump to end
-        JMP start346                     ; else continue
-end346:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end344                        ; if cell is zero jump to end
-        JMP start344                     ; else continue
-end344:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10092,13 +8757,40 @@ end344:
 start347:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
+        add ebx, 12                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end347                        ; if cell is zero jump to end
+        JMP start347                     ; else continue
+end347:        
+        
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end346                        ; if cell is zero jump to end
+        JMP start346                     ; else continue
+end346:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10108,13 +8800,15 @@ start347:
 start348:
                 
             
-        mov eax, 2                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10124,18 +8818,25 @@ start348:
         JMP start348                     ; else continue
 end348:        
         
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 13                      ; move cell-pointer (decrement)
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end341                        ; if cell is zero jump to end
+        JMP start341                     ; else continue
+end341:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end337                        ; if cell is zero jump to end
+        JMP start337                     ; else continue
+end337:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10145,13 +8846,15 @@ end348:
 start349:
                 
             
-        mov eax, 2                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10161,15 +8864,7 @@ start349:
         JMP start349                     ; else continue
 end349:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end347                        ; if cell is zero jump to end
-        JMP start347                     ; else continue
-end347:        
-        
-        add ebx, 10                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10179,13 +8874,15 @@ end347:
 start350:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10195,34 +8892,12 @@ start350:
 start351:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end351                        ; if cell is zero jump to end
-        JMP start351                     ; else continue
-end351:        
-        
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10232,13 +8907,15 @@ end351:
 start352:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10248,15 +8925,7 @@ start352:
         JMP start352                     ; else continue
 end352:        
         
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end350                        ; if cell is zero jump to end
-        JMP start350                     ; else continue
-end350:        
-        
-        add ebx, 3                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10266,13 +8935,40 @@ end350:
 start353:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end353                        ; if cell is zero jump to end
+        JMP start353                     ; else continue
+end353:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end351                        ; if cell is zero jump to end
+        JMP start351                     ; else continue
+end351:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10282,34 +8978,7 @@ start353:
 start354:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end354                        ; if cell is zero jump to end
-        JMP start354                     ; else continue
-end354:        
-        
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10319,31 +8988,15 @@ end354:
 start355:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end355                        ; if cell is zero jump to end
-        JMP start355                     ; else continue
-end355:        
-        
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end353                        ; if cell is zero jump to end
-        JMP start353                     ; else continue
-end353:        
-        
-        add ebx, 15                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10353,13 +9006,20 @@ end353:
 start356:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10369,13 +9029,15 @@ start356:
 start357:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10385,18 +9047,17 @@ start357:
         JMP start357                     ; else continue
 end357:        
         
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end356                        ; if cell is zero jump to end
+        JMP start356                     ; else continue
+end356:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10406,13 +9067,20 @@ end357:
 start358:
                 
             
-        mov eax, 2                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10422,15 +9090,17 @@ start358:
         JMP start358                     ; else continue
 end358:        
         
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end356                        ; if cell is zero jump to end
-        JMP start356                     ; else continue
-end356:        
+        JE end355                        ; if cell is zero jump to end
+        JMP start355                     ; else continue
+end355:        
         
-        add ebx, 4                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10440,13 +9110,15 @@ end356:
 start359:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10456,13 +9128,20 @@ start359:
 start360:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 2                     ; sub n from current cell
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10472,18 +9151,17 @@ start360:
         JMP start360                     ; else continue
 end360:        
         
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end359                        ; if cell is zero jump to end
+        JMP start359                     ; else continue
+end359:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10493,13 +9171,15 @@ end360:
 start361:
                 
             
-        mov eax, 2                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10509,16 +9189,32 @@ start361:
         JMP start361                     ; else continue
 end361:        
         
+        sub ebx, 12                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end359                        ; if cell is zero jump to end
-        JMP start359                     ; else continue
-end359:        
+        JE end354                        ; if cell is zero jump to end
+        JMP start354                     ; else continue
+end354:        
         
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end350                        ; if cell is zero jump to end
+        JMP start350                     ; else continue
+end350:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10528,29 +9224,7 @@ end359:
 start362:
                 
             
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end362                        ; if cell is zero jump to end
-        JMP start362                     ; else continue
-end362:        
-        
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 9                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10560,7 +9234,18 @@ end362:
 start363:
                 
             
-        add ebx, 5                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end363                        ; if cell is zero jump to end
+        JMP start363                     ; else continue
+end363:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10573,18 +9258,6 @@ start364:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 9                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 8                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -10593,7 +9266,7 @@ start364:
         JMP start364                     ; else continue
 end364:        
         
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10606,13 +9279,6 @@ start365:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 8                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -10621,10 +9287,17 @@ start365:
         JMP start365                     ; else continue
 end365:        
         
-        add ebx, 3                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end362                        ; if cell is zero jump to end
+        JMP start362                     ; else continue
+end362:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10634,15 +9307,7 @@ end365:
 start366:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -10652,17 +9317,7 @@ start366:
         JMP start366                     ; else continue
 end366:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end363                        ; if cell is zero jump to end
-        JMP start363                     ; else continue
-end363:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10675,13 +9330,6 @@ start367:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -10690,7 +9338,7 @@ start367:
         JMP start367                     ; else continue
 end367:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10703,13 +9351,6 @@ start368:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -10718,7 +9359,7 @@ start368:
         JMP start368                     ; else continue
 end368:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10728,28 +9369,7 @@ end368:
 start369:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end369                        ; if cell is zero jump to end
-        JMP start369                     ; else continue
-end369:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -10757,229 +9377,6 @@ end369:
         cmp [edx], byte 0x0            ; compare with zero
         JE end370                        ; if cell is zero, don't enter scope
 start370:
-                
-            
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end371                        ; if cell is zero, don't enter scope
-start371:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end371                        ; if cell is zero jump to end
-        JMP start371                     ; else continue
-end371:        
-        
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end372                        ; if cell is zero, don't enter scope
-start372:
-                
-            
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end372                        ; if cell is zero jump to end
-        JMP start372                     ; else continue
-end372:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end370                        ; if cell is zero jump to end
-        JMP start370                     ; else continue
-end370:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end335                        ; if cell is zero jump to end
-        JMP start335                     ; else continue
-end335:        
-        
-        sub ebx, 13                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end373                        ; if cell is zero, don't enter scope
-start373:
-                
-            
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end374                        ; if cell is zero, don't enter scope
-start374:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end375                        ; if cell is zero, don't enter scope
-start375:
-                
-            
-        sub ebx, 17                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end376                        ; if cell is zero, don't enter scope
-start376:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 34                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 34                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end376                        ; if cell is zero jump to end
-        JMP start376                     ; else continue
-end376:        
-        
-        add ebx, 17                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end377                        ; if cell is zero, don't enter scope
-start377:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end377                        ; if cell is zero jump to end
-        JMP start377                     ; else continue
-end377:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end375                        ; if cell is zero jump to end
-        JMP start375                     ; else continue
-end375:        
-        
-        add ebx, 13                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end378                        ; if cell is zero, don't enter scope
-start378:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 9                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 9                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end378                        ; if cell is zero jump to end
-        JMP start378                     ; else continue
-end378:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end379                        ; if cell is zero, don't enter scope
-start379:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -10996,10 +9393,295 @@ start379:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
+        JE end370                        ; if cell is zero jump to end
+        JMP start370                     ; else continue
+end370:        
+        
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end371                        ; if cell is zero, don't enter scope
+start371:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end371                        ; if cell is zero jump to end
+        JMP start371                     ; else continue
+end371:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end369                        ; if cell is zero jump to end
+        JMP start369                     ; else continue
+end369:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end372                        ; if cell is zero, don't enter scope
+start372:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end372                        ; if cell is zero jump to end
+        JMP start372                     ; else continue
+end372:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end373                        ; if cell is zero, don't enter scope
+start373:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end373                        ; if cell is zero jump to end
+        JMP start373                     ; else continue
+end373:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end374                        ; if cell is zero, don't enter scope
+start374:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end375                        ; if cell is zero, don't enter scope
+start375:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 2                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end375                        ; if cell is zero jump to end
+        JMP start375                     ; else continue
+end375:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end376                        ; if cell is zero, don't enter scope
+start376:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end376                        ; if cell is zero jump to end
+        JMP start376                     ; else continue
+end376:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end374                        ; if cell is zero jump to end
+        JMP start374                     ; else continue
+end374:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end377                        ; if cell is zero, don't enter scope
+start377:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end377                        ; if cell is zero jump to end
+        JMP start377                     ; else continue
+end377:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end378                        ; if cell is zero, don't enter scope
+start378:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end378                        ; if cell is zero jump to end
+        JMP start378                     ; else continue
+end378:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end379                        ; if cell is zero, don't enter scope
+start379:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
         JE end379                        ; if cell is zero jump to end
         JMP start379                     ; else continue
 end379:        
         
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
@@ -11013,30 +9695,12 @@ start380:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end380                        ; if cell is zero jump to end
-        JMP start380                     ; else continue
-end380:        
-        
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 14                      ; move cell-pointer (decrement)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11046,15 +9710,7 @@ end380:
 start381:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 14                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11067,53 +9723,12 @@ start382:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end383                        ; if cell is zero, don't enter scope
-start383:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end383                        ; if cell is zero jump to end
-        JMP start383                     ; else continue
-end383:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end384                        ; if cell is zero, don't enter scope
-start384:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end384                        ; if cell is zero jump to end
-        JMP start384                     ; else continue
-end384:        
-        
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11123,10 +9738,56 @@ end384:
         JMP start382                     ; else continue
 end382:        
         
-        add ebx, 7                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end383                        ; if cell is zero, don't enter scope
+start383:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end384                        ; if cell is zero, don't enter scope
+start384:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end384                        ; if cell is zero jump to end
+        JMP start384                     ; else continue
+end384:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11139,25 +9800,12 @@ start385:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end385                        ; if cell is zero jump to end
-        JMP start385                     ; else continue
-end385:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 11                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11167,7 +9815,7 @@ end385:
 start386:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11177,7 +9825,7 @@ start386:
         JMP start386                     ; else continue
 end386:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11190,8 +9838,6 @@ start387:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -11200,7 +9846,10 @@ start387:
         JMP start387                     ; else continue
 end387:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11210,15 +9859,43 @@ end387:
 start388:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end388                        ; if cell is zero jump to end
+        JMP start388                     ; else continue
+end388:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        sub ebx, 6                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end385                        ; if cell is zero jump to end
+        JMP start385                     ; else continue
+end385:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end383                        ; if cell is zero jump to end
+        JMP start383                     ; else continue
+end383:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11231,12 +9908,12 @@ start389:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11246,10 +9923,10 @@ start389:
         JMP start389                     ; else continue
 end389:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11262,12 +9939,12 @@ start390:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11277,7 +9954,15 @@ start390:
 start391:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11287,8 +9972,7 @@ start391:
         JMP start391                     ; else continue
 end391:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11298,30 +9982,15 @@ end391:
 start392:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end392                        ; if cell is zero jump to end
-        JMP start392                     ; else continue
-end392:        
-        
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end390                        ; if cell is zero jump to end
-        JMP start390                     ; else continue
-end390:        
-        
-        add ebx, 7                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 12                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11331,15 +10000,7 @@ end390:
 start393:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11349,10 +10010,7 @@ start393:
         JMP start393                     ; else continue
 end393:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11362,7 +10020,8 @@ end393:
 start394:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11372,7 +10031,10 @@ start394:
         JMP start394                     ; else continue
 end394:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11382,10 +10044,7 @@ end394:
 start395:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11397,17 +10056,6 @@ end395:
         
         add ebx, 1                      ; move cell-pointer (increment)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end388                        ; if cell is zero jump to end
-        JMP start388                     ; else continue
-end388:        
-        
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -11416,11 +10064,6 @@ end388:
 start396:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -11432,8 +10075,31 @@ start396:
         JMP start396                     ; else continue
 end396:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end392                        ; if cell is zero jump to end
+        JMP start392                     ; else continue
+end392:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end390                        ; if cell is zero jump to end
+        JMP start390                     ; else continue
+end390:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11443,23 +10109,10 @@ end396:
 start397:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end397                        ; if cell is zero jump to end
-        JMP start397                     ; else continue
-end397:        
-        
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11469,20 +10122,7 @@ end397:
 start398:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 6                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11492,7 +10132,27 @@ start398:
         JMP start398                     ; else continue
 end398:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end397                        ; if cell is zero jump to end
+        JMP start397                     ; else continue
+end397:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end381                        ; if cell is zero jump to end
+        JMP start381                     ; else continue
+end381:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11502,20 +10162,7 @@ end398:
 start399:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11525,7 +10172,7 @@ start399:
         JMP start399                     ; else continue
 end399:        
         
-        add ebx, 6                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11538,12 +10185,12 @@ start400:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11553,7 +10200,7 @@ start400:
         JMP start400                     ; else continue
 end400:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11566,22 +10213,12 @@ start401:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end401                        ; if cell is zero jump to end
-        JMP start401                     ; else continue
-end401:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11591,33 +10228,12 @@ end401:
 start402:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end402                        ; if cell is zero jump to end
-        JMP start402                     ; else continue
-end402:        
-        
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 36                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11630,48 +10246,12 @@ start403:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end404                        ; if cell is zero, don't enter scope
-start404:
-                
-            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
         add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end404                        ; if cell is zero jump to end
-        JMP start404                     ; else continue
-end404:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end405                        ; if cell is zero, don't enter scope
-start405:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end405                        ; if cell is zero jump to end
-        JMP start405                     ; else continue
-end405:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -11681,7 +10261,60 @@ end405:
         JMP start403                     ; else continue
 end403:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end404                        ; if cell is zero, don't enter scope
+start404:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end404                        ; if cell is zero jump to end
+        JMP start404                     ; else continue
+end404:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end402                        ; if cell is zero jump to end
+        JMP start402                     ; else continue
+end402:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end405                        ; if cell is zero, don't enter scope
+start405:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11691,16 +10324,14 @@ end403:
 start406:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end406                        ; if cell is zero jump to end
-        JMP start406                     ; else continue
-end406:        
-        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
@@ -11714,17 +10345,17 @@ start407:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end407                        ; if cell is zero jump to end
-        JMP start407                     ; else continue
-end407:        
-        
-        add ebx, 36                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 10                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -11732,248 +10363,6 @@ end407:
         cmp [edx], byte 0x0            ; compare with zero
         JE end408                        ; if cell is zero, don't enter scope
 start408:
-                
-            
-        sub ebx, 45                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end409                        ; if cell is zero, don't enter scope
-start409:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end409                        ; if cell is zero jump to end
-        JMP start409                     ; else continue
-end409:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end408                        ; if cell is zero jump to end
-        JMP start408                     ; else continue
-end408:        
-        
-        add ebx, 36                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end410                        ; if cell is zero, don't enter scope
-start410:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end410                        ; if cell is zero jump to end
-        JMP start410                     ; else continue
-end410:        
-        
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end411                        ; if cell is zero, don't enter scope
-start411:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end411                        ; if cell is zero jump to end
-        JMP start411                     ; else continue
-end411:        
-        
-        sub ebx, 18                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end412                        ; if cell is zero, don't enter scope
-start412:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end412                        ; if cell is zero jump to end
-        JMP start412                     ; else continue
-end412:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end413                        ; if cell is zero, don't enter scope
-start413:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end413                        ; if cell is zero jump to end
-        JMP start413                     ; else continue
-end413:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end381                        ; if cell is zero jump to end
-        JMP start381                     ; else continue
-end381:        
-        
-        add ebx, 10                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end414                        ; if cell is zero, don't enter scope
-start414:
-                
-            
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end415                        ; if cell is zero, don't enter scope
-start415:
-                
-            
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 15                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end415                        ; if cell is zero jump to end
-        JMP start415                     ; else continue
-end415:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end414                        ; if cell is zero jump to end
-        JMP start414                     ; else continue
-end414:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 16                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end416                        ; if cell is zero, don't enter scope
-start416:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -11990,11 +10379,281 @@ start416:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
+        JE end408                        ; if cell is zero jump to end
+        JMP start408                     ; else continue
+end408:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end407                        ; if cell is zero jump to end
+        JMP start407                     ; else continue
+end407:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end409                        ; if cell is zero, don't enter scope
+start409:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 10                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end409                        ; if cell is zero jump to end
+        JMP start409                     ; else continue
+end409:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end406                        ; if cell is zero jump to end
+        JMP start406                     ; else continue
+end406:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end410                        ; if cell is zero, don't enter scope
+start410:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end411                        ; if cell is zero, don't enter scope
+start411:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 10                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end411                        ; if cell is zero jump to end
+        JMP start411                     ; else continue
+end411:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end410                        ; if cell is zero jump to end
+        JMP start410                     ; else continue
+end410:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end412                        ; if cell is zero, don't enter scope
+start412:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end412                        ; if cell is zero jump to end
+        JMP start412                     ; else continue
+end412:        
+        
+        sub ebx, 11                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end405                        ; if cell is zero jump to end
+        JMP start405                     ; else continue
+end405:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end413                        ; if cell is zero, don't enter scope
+start413:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end413                        ; if cell is zero jump to end
+        JMP start413                     ; else continue
+end413:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end414                        ; if cell is zero, don't enter scope
+start414:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end414                        ; if cell is zero jump to end
+        JMP start414                     ; else continue
+end414:        
+        
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end415                        ; if cell is zero, don't enter scope
+start415:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end415                        ; if cell is zero jump to end
+        JMP start415                     ; else continue
+end415:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end401                        ; if cell is zero jump to end
+        JMP start401                     ; else continue
+end401:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end416                        ; if cell is zero, don't enter scope
+start416:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
         JE end416                        ; if cell is zero jump to end
         JMP start416                     ; else continue
 end416:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12007,22 +10666,12 @@ start417:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 6                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 6                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end417                        ; if cell is zero jump to end
-        JMP start417                     ; else continue
-end417:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12032,28 +10681,12 @@ end417:
 start418:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 9                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 9                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end418                        ; if cell is zero jump to end
-        JMP start418                     ; else continue
-end418:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12063,7 +10696,25 @@ end418:
 start419:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end419                        ; if cell is zero jump to end
+        JMP start419                     ; else continue
+end419:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12076,12 +10727,12 @@ start420:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 34                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 34                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12091,10 +10742,22 @@ start420:
         JMP start420                     ; else continue
 end420:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end418                        ; if cell is zero jump to end
+        JMP start418                     ; else continue
+end418:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12104,38 +10767,7 @@ end420:
 start421:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end421                        ; if cell is zero jump to end
-        JMP start421                     ; else continue
-end421:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end419                        ; if cell is zero jump to end
-        JMP start419                     ; else continue
-end419:        
-        
-        sub ebx, 33                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12148,42 +10780,12 @@ start422:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end422                        ; if cell is zero jump to end
-        JMP start422                     ; else continue
-end422:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end374                        ; if cell is zero jump to end
-        JMP start374                     ; else continue
-end374:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end373                        ; if cell is zero jump to end
-        JMP start373                     ; else continue
-end373:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12196,10 +10798,17 @@ start423:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
-        mov eax, 4                     ; add n to current cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12209,10 +10818,35 @@ start423:
 start424:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        mov eax, 4                     ; add n to current cell
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end424                        ; if cell is zero jump to end
+        JMP start424                     ; else continue
+end424:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end423                        ; if cell is zero jump to end
+        JMP start423                     ; else continue
+end423:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12222,7 +10856,40 @@ start424:
 start425:
                 
             
-        sub ebx, 17                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end425                        ; if cell is zero jump to end
+        JMP start425                     ; else continue
+end425:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end422                        ; if cell is zero jump to end
+        JMP start422                     ; else continue
+end422:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12235,25 +10902,12 @@ start426:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 34                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 34                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end426                        ; if cell is zero jump to end
-        JMP start426                     ; else continue
-end426:        
-        
-        add ebx, 17                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12266,12 +10920,17 @@ start427:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12281,25 +10940,17 @@ start427:
         JMP start427                     ; else continue
 end427:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end425                        ; if cell is zero jump to end
-        JMP start425                     ; else continue
-end425:        
+        JE end426                        ; if cell is zero jump to end
+        JMP start426                     ; else continue
+end426:        
         
-        add ebx, 12                      ; move cell-pointer (increment)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 14                      ; move cell-pointer (decrement)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12309,15 +10960,43 @@ end425:
 start428:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 14                      ; move cell-pointer (increment)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end428                        ; if cell is zero jump to end
+        JMP start428                     ; else continue
+end428:        
+        
+        sub ebx, 12                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end421                        ; if cell is zero jump to end
+        JMP start421                     ; else continue
+end421:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end417                        ; if cell is zero jump to end
+        JMP start417                     ; else continue
+end417:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12330,12 +11009,25 @@ start429:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end429                        ; if cell is zero jump to end
+        JMP start429                     ; else continue
+end429:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end380                        ; if cell is zero jump to end
+        JMP start380                     ; else continue
+end380:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12345,7 +11037,15 @@ start429:
 start430:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12355,8 +11055,7 @@ start430:
         JMP start430                     ; else continue
 end430:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12366,30 +11065,15 @@ end430:
 start431:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end431                        ; if cell is zero jump to end
-        JMP start431                     ; else continue
-end431:        
-        
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end429                        ; if cell is zero jump to end
-        JMP start429                     ; else continue
-end429:        
-        
-        add ebx, 7                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12402,6 +11086,27 @@ start432:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end432                        ; if cell is zero jump to end
+        JMP start432                     ; else continue
+end432:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end433                        ; if cell is zero, don't enter scope
+start433:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
         sub ebx, 7                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
@@ -12413,34 +11118,11 @@ start432:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end432                        ; if cell is zero jump to end
-        JMP start432                     ; else continue
-end432:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end433                        ; if cell is zero, don't enter scope
-start433:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
         JE end433                        ; if cell is zero jump to end
         JMP start433                     ; else continue
 end433:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12453,7 +11135,17 @@ start434:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12463,7 +11155,7 @@ start434:
         JMP start434                     ; else continue
 end434:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12473,15 +11165,17 @@ end434:
 start435:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 6                      ; move cell-pointer (decrement)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end435                        ; if cell is zero jump to end
+        JMP start435                     ; else continue
+end435:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12491,28 +11185,7 @@ start435:
 start436:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end436                        ; if cell is zero jump to end
-        JMP start436                     ; else continue
-end436:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12525,12 +11198,12 @@ start437:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12540,18 +11213,20 @@ start437:
 start438:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end438                        ; if cell is zero jump to end
-        JMP start438                     ; else continue
-end438:        
-        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12561,7 +11236,15 @@ end438:
 start439:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12571,20 +11254,17 @@ start439:
         JMP start439                     ; else continue
 end439:        
         
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end437                        ; if cell is zero jump to end
-        JMP start437                     ; else continue
-end437:        
+        JE end438                        ; if cell is zero jump to end
+        JMP start438                     ; else continue
+end438:        
         
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12597,12 +11277,17 @@ start440:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12612,10 +11297,17 @@ start440:
         JMP start440                     ; else continue
 end440:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
-        add ebx, 2                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end437                        ; if cell is zero jump to end
+        JMP start437                     ; else continue
+end437:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12625,16 +11317,14 @@ end440:
 start441:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end441                        ; if cell is zero jump to end
-        JMP start441                     ; else continue
-end441:        
-        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
@@ -12648,7 +11338,17 @@ start442:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 11                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12658,18 +11358,17 @@ start442:
         JMP start442                     ; else continue
 end442:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end435                        ; if cell is zero jump to end
-        JMP start435                     ; else continue
-end435:        
+        JE end441                        ; if cell is zero jump to end
+        JMP start441                     ; else continue
+end441:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12679,13 +11378,15 @@ end435:
 start443:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12695,8 +11396,25 @@ start443:
         JMP start443                     ; else continue
 end443:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 12                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end436                        ; if cell is zero jump to end
+        JMP start436                     ; else continue
+end436:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end431                        ; if cell is zero jump to end
+        JMP start431                     ; else continue
+end431:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12706,23 +11424,7 @@ end443:
 start444:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end444                        ; if cell is zero jump to end
-        JMP start444                     ; else continue
-end444:        
-        
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12734,18 +11436,6 @@ start445:
             
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
-
-        add ebx, 6                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12768,18 +11458,6 @@ start446:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -12790,6 +11468,16 @@ end446:
         
         add ebx, 6                      ; move cell-pointer (increment)
 
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end444                        ; if cell is zero jump to end
+        JMP start444                     ; else continue
+end444:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -12798,15 +11486,7 @@ end446:
 start447:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12816,7 +11496,7 @@ start447:
         JMP start447                     ; else continue
 end447:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12829,13 +11509,6 @@ start448:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -12844,7 +11517,7 @@ start448:
         JMP start448                     ; else continue
 end448:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12857,13 +11530,6 @@ start449:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -12872,15 +11538,7 @@ start449:
         JMP start449                     ; else continue
 end449:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 36                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12890,10 +11548,7 @@ end449:
 start450:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12903,7 +11558,15 @@ start450:
 start451:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12913,8 +11576,7 @@ start451:
         JMP start451                     ; else continue
 end451:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12924,6 +11586,19 @@ end451:
 start452:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
@@ -12934,7 +11609,7 @@ start452:
         JMP start452                     ; else continue
 end452:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12944,7 +11619,7 @@ end452:
         JMP start450                     ; else continue
 end450:        
         
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12954,7 +11629,7 @@ end450:
 start453:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -12964,7 +11639,7 @@ start453:
         JMP start453                     ; else continue
 end453:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12974,20 +11649,7 @@ end453:
 start454:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end454                        ; if cell is zero jump to end
-        JMP start454                     ; else continue
-end454:        
-        
-        add ebx, 36                      ; move cell-pointer (increment)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -12997,7 +11659,25 @@ end454:
 start455:
                 
             
-        sub ebx, 45                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end455                        ; if cell is zero jump to end
+        JMP start455                     ; else continue
+end455:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13010,6 +11690,18 @@ start456:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13018,30 +11710,17 @@ start456:
         JMP start456                     ; else continue
 end456:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end455                        ; if cell is zero jump to end
-        JMP start455                     ; else continue
-end455:        
+        JE end454                        ; if cell is zero jump to end
+        JMP start454                     ; else continue
+end454:        
         
-        add ebx, 36                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13051,13 +11730,7 @@ end455:
 start457:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13067,8 +11740,10 @@ start457:
         JMP start457                     ; else continue
 end457:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13078,27 +11753,6 @@ end457:
 start458:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end458                        ; if cell is zero jump to end
-        JMP start458                     ; else continue
-end458:        
-        
-        sub ebx, 18                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -13107,13 +11761,7 @@ end458:
 start459:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13123,10 +11771,10 @@ start459:
         JMP start459                     ; else continue
 end459:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13139,13 +11787,6 @@ start460:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13156,24 +11797,6 @@ end460:
         
         add ebx, 1                      ; move cell-pointer (increment)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end428                        ; if cell is zero jump to end
-        JMP start428                     ; else continue
-end428:        
-        
-        add ebx, 10                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -13182,37 +11805,6 @@ end428:
 start461:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end462                        ; if cell is zero, don't enter scope
-start462:
-                
-            
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 15                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end462                        ; if cell is zero jump to end
-        JMP start462                     ; else continue
-end462:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -13226,8 +11818,26 @@ end461:
         
         add ebx, 1                      ; move cell-pointer (increment)
 
-        mov eax, 12                     ; sub n from current cell
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end462                        ; if cell is zero, don't enter scope
+start462:
+                
+            
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end462                        ; if cell is zero jump to end
+        JMP start462                     ; else continue
+end462:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13237,6 +11847,17 @@ end461:
 start463:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end463                        ; if cell is zero jump to end
+        JMP start463                     ; else continue
+end463:        
+        
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -13250,13 +11871,6 @@ start464:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 34                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 34                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13265,10 +11879,7 @@ start464:
         JMP start464                     ; else continue
 end464:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13281,13 +11892,6 @@ start465:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13297,19 +11901,6 @@ start465:
 end465:        
         
         add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end463                        ; if cell is zero jump to end
-        JMP start463                     ; else continue
-end463:        
-        
-        sub ebx, 21                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13322,13 +11913,6 @@ start466:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13336,26 +11920,6 @@ start466:
         JE end466                        ; if cell is zero jump to end
         JMP start466                     ; else continue
 end466:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end424                        ; if cell is zero jump to end
-        JMP start424                     ; else continue
-end424:        
-        
-        sub ebx, 15                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end423                        ; if cell is zero jump to end
-        JMP start423                     ; else continue
-end423:        
         
         add ebx, 1                      ; move cell-pointer (increment)
 
@@ -13370,10 +11934,15 @@ start467:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end467                        ; if cell is zero jump to end
+        JMP start467                     ; else continue
+end467:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13383,10 +11952,18 @@ start467:
 start468:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end468                        ; if cell is zero jump to end
+        JMP start468                     ; else continue
+end468:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13396,66 +11973,7 @@ start468:
 start469:
                 
             
-        sub ebx, 17                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end470                        ; if cell is zero, don't enter scope
-start470:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 34                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 34                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end470                        ; if cell is zero jump to end
-        JMP start470                     ; else continue
-end470:        
-        
-        add ebx, 17                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end471                        ; if cell is zero, don't enter scope
-start471:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end471                        ; if cell is zero jump to end
-        JMP start471                     ; else continue
-end471:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13465,7 +11983,66 @@ end471:
         JMP start469                     ; else continue
 end469:        
         
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end458                        ; if cell is zero jump to end
+        JMP start458                     ; else continue
+end458:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end470                        ; if cell is zero, don't enter scope
+start470:
+                
+            
         add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end470                        ; if cell is zero jump to end
+        JMP start470                     ; else continue
+end470:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end471                        ; if cell is zero, don't enter scope
+start471:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end471                        ; if cell is zero jump to end
+        JMP start471                     ; else continue
+end471:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13475,25 +12052,12 @@ end469:
 start472:
                 
             
+        add ebx, 1                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end472                        ; if cell is zero jump to end
-        JMP start472                     ; else continue
-end472:        
-        
-        add ebx, 12                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13506,12 +12070,12 @@ start473:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 12                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 12                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13534,22 +12098,12 @@ start474:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end474                        ; if cell is zero jump to end
-        JMP start474                     ; else continue
-end474:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13562,6 +12116,19 @@ start475:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end476                        ; if cell is zero, don't enter scope
+start476:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
         sub ebx, 2                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
@@ -13573,37 +12140,11 @@ start475:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end475                        ; if cell is zero jump to end
-        JMP start475                     ; else continue
-end475:        
+        JE end476                        ; if cell is zero jump to end
+        JMP start476                     ; else continue
+end476:        
         
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 14                      ; move cell-pointer (decrement)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end476                        ; if cell is zero, don't enter scope
-start476:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 14                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13616,53 +12157,17 @@ start477:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         add ebx, 2                      ; move cell-pointer (increment)
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end478                        ; if cell is zero, don't enter scope
-start478:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end478                        ; if cell is zero jump to end
-        JMP start478                     ; else continue
-end478:        
-        
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end479                        ; if cell is zero, don't enter scope
-start479:
-                
-            
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end479                        ; if cell is zero jump to end
-        JMP start479                     ; else continue
-end479:        
-        
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13672,10 +12177,68 @@ end479:
         JMP start477                     ; else continue
 end477:        
         
-        add ebx, 7                      ; move cell-pointer (increment)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end475                        ; if cell is zero jump to end
+        JMP start475                     ; else continue
+end475:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end478                        ; if cell is zero, don't enter scope
+start478:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end478                        ; if cell is zero jump to end
+        JMP start478                     ; else continue
+end478:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end474                        ; if cell is zero jump to end
+        JMP start474                     ; else continue
+end474:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end479                        ; if cell is zero, don't enter scope
+start479:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end479                        ; if cell is zero jump to end
+        JMP start479                     ; else continue
+end479:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13685,28 +12248,7 @@ end477:
 start480:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end480                        ; if cell is zero jump to end
-        JMP start480                     ; else continue
-end480:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13716,7 +12258,15 @@ end480:
 start481:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13726,7 +12276,17 @@ start481:
         JMP start481                     ; else continue
 end481:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end480                        ; if cell is zero jump to end
+        JMP start480                     ; else continue
+end480:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13739,7 +12299,12 @@ start482:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13749,7 +12314,22 @@ start482:
         JMP start482                     ; else continue
 end482:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end472                        ; if cell is zero jump to end
+        JMP start472                     ; else continue
+end472:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13759,15 +12339,7 @@ end482:
 start483:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 6                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13780,13 +12352,6 @@ start484:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13795,10 +12360,12 @@ start484:
         JMP start484                     ; else continue
 end484:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13811,12 +12378,12 @@ start485:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13826,7 +12393,22 @@ start485:
 start486:
                 
             
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
         add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13836,8 +12418,7 @@ start486:
         JMP start486                     ; else continue
 end486:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13847,6 +12428,14 @@ end486:
 start487:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
         sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
@@ -13857,7 +12446,7 @@ start487:
         JMP start487                     ; else continue
 end487:        
         
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13867,10 +12456,7 @@ end487:
         JMP start485                     ; else continue
 end485:        
         
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13883,12 +12469,12 @@ start488:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13898,10 +12484,22 @@ start488:
         JMP start488                     ; else continue
 end488:        
         
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end483                        ; if cell is zero jump to end
+        JMP start483                     ; else continue
+end483:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13913,6 +12511,11 @@ start489:
             
         add ebx, 1                      ; move cell-pointer (increment)
 
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -13921,7 +12524,7 @@ start489:
         JMP start489                     ; else continue
 end489:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13931,10 +12534,7 @@ end489:
 start490:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -13944,18 +12544,7 @@ start490:
         JMP start490                     ; else continue
 end490:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end483                        ; if cell is zero jump to end
-        JMP start483                     ; else continue
-end483:        
-        
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13965,24 +12554,12 @@ end483:
 start491:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end491                        ; if cell is zero jump to end
-        JMP start491                     ; else continue
-end491:        
-        
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -13992,13 +12569,15 @@ end491:
 start492:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14008,7 +12587,7 @@ start492:
         JMP start492                     ; else continue
 end492:        
         
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        sub ebx, 5                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14021,27 +12600,12 @@ start493:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 6                      ; move cell-pointer (increment)
+        add ebx, 5                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end493                        ; if cell is zero jump to end
-        JMP start493                     ; else continue
-end493:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14054,27 +12618,7 @@ start494:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end494                        ; if cell is zero jump to end
-        JMP start494                     ; else continue
-end494:        
-        
-        add ebx, 6                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14087,12 +12631,12 @@ start495:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14102,7 +12646,7 @@ start495:
         JMP start495                     ; else continue
 end495:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14115,12 +12659,17 @@ start496:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14130,7 +12679,20 @@ start496:
         JMP start496                     ; else continue
 end496:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end494                        ; if cell is zero jump to end
+        JMP start494                     ; else continue
+end494:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14140,15 +12702,7 @@ end496:
 start497:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14158,15 +12712,15 @@ start497:
         JMP start497                     ; else continue
 end497:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 36                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end493                        ; if cell is zero jump to end
+        JMP start493                     ; else continue
+end493:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14176,10 +12730,17 @@ end497:
 start498:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        add ebx, 2                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end498                        ; if cell is zero jump to end
+        JMP start498                     ; else continue
+end498:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14189,18 +12750,7 @@ start498:
 start499:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end499                        ; if cell is zero jump to end
-        JMP start499                     ; else continue
-end499:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14210,7 +12760,15 @@ end499:
 start500:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14220,15 +12778,15 @@ start500:
         JMP start500                     ; else continue
 end500:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 11                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end498                        ; if cell is zero jump to end
-        JMP start498                     ; else continue
-end498:        
+        JE end499                        ; if cell is zero jump to end
+        JMP start499                     ; else continue
+end499:        
         
         add ebx, 2                      ; move cell-pointer (increment)
 
@@ -14240,7 +12798,15 @@ end498:
 start501:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14252,6 +12818,21 @@ end501:
         
         sub ebx, 2                      ; move cell-pointer (decrement)
 
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end491                        ; if cell is zero jump to end
+        JMP start491                     ; else continue
+end491:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -14260,20 +12841,7 @@ end501:
 start502:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end502                        ; if cell is zero jump to end
-        JMP start502                     ; else continue
-end502:        
-        
-        add ebx, 36                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14283,7 +12851,23 @@ end502:
 start503:
                 
             
-        sub ebx, 45                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end503                        ; if cell is zero jump to end
+        JMP start503                     ; else continue
+end503:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14296,38 +12880,12 @@ start504:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end504                        ; if cell is zero jump to end
-        JMP start504                     ; else continue
-end504:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
-        mov eax, 16                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end503                        ; if cell is zero jump to end
-        JMP start503                     ; else continue
-end503:        
-        
-        add ebx, 36                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14337,13 +12895,22 @@ end503:
 start505:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
         sub ebx, 1                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14353,8 +12920,7 @@ start505:
         JMP start505                     ; else continue
 end505:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14364,13 +12930,15 @@ end505:
 start506:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
         sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14380,10 +12948,17 @@ start506:
         JMP start506                     ; else continue
 end506:        
         
-        sub ebx, 18                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end504                        ; if cell is zero jump to end
+        JMP start504                     ; else continue
+end504:        
+        
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14393,13 +12968,15 @@ end506:
 start507:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -14411,8 +12988,20 @@ end507:
         
         sub ebx, 1                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end502                        ; if cell is zero jump to end
+        JMP start502                     ; else continue
+end502:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14422,9 +13011,330 @@ end507:
 start508:
                 
             
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end509                        ; if cell is zero, don't enter scope
+start509:
+                
+            
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
+        sub ebx, 36                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 36                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end509                        ; if cell is zero jump to end
+        JMP start509                     ; else continue
+end509:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end508                        ; if cell is zero jump to end
+        JMP start508                     ; else continue
+end508:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end510                        ; if cell is zero, don't enter scope
+start510:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end510                        ; if cell is zero jump to end
+        JMP start510                     ; else continue
+end510:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 15                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end511                        ; if cell is zero, don't enter scope
+start511:
+                
+            
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end512                        ; if cell is zero, don't enter scope
+start512:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end512                        ; if cell is zero jump to end
+        JMP start512                     ; else continue
+end512:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end513                        ; if cell is zero, don't enter scope
+start513:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end513                        ; if cell is zero jump to end
+        JMP start513                     ; else continue
+end513:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end511                        ; if cell is zero jump to end
+        JMP start511                     ; else continue
+end511:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 21                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end514                        ; if cell is zero, don't enter scope
+start514:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end514                        ; if cell is zero jump to end
+        JMP start514                     ; else continue
+end514:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end515                        ; if cell is zero, don't enter scope
+start515:
+                
+            
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end516                        ; if cell is zero, don't enter scope
+start516:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end516                        ; if cell is zero jump to end
+        JMP start516                     ; else continue
+end516:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end517                        ; if cell is zero, don't enter scope
+start517:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end518                        ; if cell is zero, don't enter scope
+start518:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end518                        ; if cell is zero jump to end
+        JMP start518                     ; else continue
+end518:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end519                        ; if cell is zero, don't enter scope
+start519:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 13                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end520                        ; if cell is zero, don't enter scope
+start520:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end520                        ; if cell is zero jump to end
+        JMP start520                     ; else continue
+end520:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end521                        ; if cell is zero, don't enter scope
+start521:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end521                        ; if cell is zero jump to end
+        JMP start521                     ; else continue
+end521:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end522                        ; if cell is zero, don't enter scope
+start522:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end522                        ; if cell is zero jump to end
+        JMP start522                     ; else continue
+end522:        
+        
         add ebx, 1                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
@@ -14436,177 +13346,78 @@ start508:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end508                        ; if cell is zero jump to end
-        JMP start508                     ; else continue
-end508:        
+        JE end519                        ; if cell is zero jump to end
+        JMP start519                     ; else continue
+end519:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end476                        ; if cell is zero jump to end
-        JMP start476                     ; else continue
-end476:        
+        JE end517                        ; if cell is zero jump to end
+        JMP start517                     ; else continue
+end517:        
         
-        add ebx, 10                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end523                        ; if cell is zero, don't enter scope
+start523:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
         sub ebx, 4                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-; scope
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
         mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end509                        ; if cell is zero, don't enter scope
-start509:
-                
-            
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end523                        ; if cell is zero jump to end
+        JMP start523                     ; else continue
+end523:        
+        
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end510                        ; if cell is zero, don't enter scope
-start510:
-                
-            
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 15                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end510                        ; if cell is zero jump to end
-        JMP start510                     ; else continue
-end510:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end509                        ; if cell is zero jump to end
-        JMP start509                     ; else continue
-end509:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 16                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
-        JE end511                        ; if cell is zero, don't enter scope
-start511:
+        JE end524                        ; if cell is zero, don't enter scope
+start524:
                 
             
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 12                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 12                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end511                        ; if cell is zero jump to end
-        JMP start511                     ; else continue
-end511:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end512                        ; if cell is zero, don't enter scope
-start512:
-                
-            
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end512                        ; if cell is zero jump to end
-        JMP start512                     ; else continue
-end512:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
-        JE end513                        ; if cell is zero, don't enter scope
-start513:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end513                        ; if cell is zero jump to end
-        JMP start513                     ; else continue
-end513:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end514                        ; if cell is zero, don't enter scope
-start514:
+        JE end525                        ; if cell is zero, don't enter scope
+start525:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -14623,308 +13434,11 @@ start514:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end514                        ; if cell is zero jump to end
-        JMP start514                     ; else continue
-end514:        
-        
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end515                        ; if cell is zero, don't enter scope
-start515:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end516                        ; if cell is zero, don't enter scope
-start516:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 34                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 34                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end516                        ; if cell is zero jump to end
-        JMP start516                     ; else continue
-end516:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end517                        ; if cell is zero, don't enter scope
-start517:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end517                        ; if cell is zero jump to end
-        JMP start517                     ; else continue
-end517:        
-        
-        add ebx, 4                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end515                        ; if cell is zero jump to end
-        JMP start515                     ; else continue
-end515:        
-        
-        sub ebx, 33                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end518                        ; if cell is zero, don't enter scope
-start518:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end518                        ; if cell is zero jump to end
-        JMP start518                     ; else continue
-end518:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end468                        ; if cell is zero jump to end
-        JMP start468                     ; else continue
-end468:        
-        
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end467                        ; if cell is zero jump to end
-        JMP start467                     ; else continue
-end467:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end519                        ; if cell is zero, don't enter scope
-start519:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end520                        ; if cell is zero, don't enter scope
-start520:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end521                        ; if cell is zero, don't enter scope
-start521:
-                
-            
-        sub ebx, 17                      ; move cell-pointer (decrement)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end522                        ; if cell is zero, don't enter scope
-start522:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 34                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 34                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end522                        ; if cell is zero jump to end
-        JMP start522                     ; else continue
-end522:        
-        
-        add ebx, 17                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end523                        ; if cell is zero, don't enter scope
-start523:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end523                        ; if cell is zero jump to end
-        JMP start523                     ; else continue
-end523:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end521                        ; if cell is zero jump to end
-        JMP start521                     ; else continue
-end521:        
-        
-        add ebx, 13                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end524                        ; if cell is zero, don't enter scope
-start524:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 6                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 6                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end524                        ; if cell is zero jump to end
-        JMP start524                     ; else continue
-end524:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end525                        ; if cell is zero, don't enter scope
-start525:
-                
-            
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
         JE end525                        ; if cell is zero jump to end
         JMP start525                     ; else continue
 end525:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14937,28 +13451,12 @@ start526:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end526                        ; if cell is zero jump to end
-        JMP start526                     ; else continue
-end526:        
-        
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 14                      ; move cell-pointer (decrement)
-
-        mov eax, 3                     ; add n to current cell
-        call add                       ; add value to cell
+        sub ebx, 12                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14968,15 +13466,17 @@ end526:
 start527:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 14                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end527                        ; if cell is zero jump to end
+        JMP start527                     ; else continue
+end527:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -14989,12 +13489,18 @@ start528:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end528                        ; if cell is zero jump to end
+        JMP start528                     ; else continue
+end528:        
+        
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 6                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15004,7 +13510,7 @@ start528:
 start529:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15014,8 +13520,7 @@ start529:
         JMP start529                     ; else continue
 end529:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15025,7 +13530,8 @@ end529:
 start530:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15035,20 +13541,31 @@ start530:
         JMP start530                     ; else continue
 end530:        
         
-        sub ebx, 8                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end528                        ; if cell is zero jump to end
-        JMP start528                     ; else continue
-end528:        
+        JE end526                        ; if cell is zero jump to end
+        JMP start526                     ; else continue
+end526:        
         
-        add ebx, 7                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end524                        ; if cell is zero jump to end
+        JMP start524                     ; else continue
+end524:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15061,25 +13578,7 @@ start531:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end531                        ; if cell is zero jump to end
-        JMP start531                     ; else continue
-end531:        
-        
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 1                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15089,7 +13588,7 @@ end531:
 start532:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15099,7 +13598,27 @@ start532:
         JMP start532                     ; else continue
 end532:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end531                        ; if cell is zero jump to end
+        JMP start531                     ; else continue
+end531:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end515                        ; if cell is zero jump to end
+        JMP start515                     ; else continue
+end515:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15109,10 +13628,7 @@ end532:
 start533:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15122,7 +13638,12 @@ start533:
         JMP start533                     ; else continue
 end533:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15135,12 +13656,22 @@ start534:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
-        sub ebx, 6                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end534                        ; if cell is zero jump to end
+        JMP start534                     ; else continue
+end534:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15153,25 +13684,12 @@ start535:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 4                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end535                        ; if cell is zero jump to end
-        JMP start535                     ; else continue
-end535:        
-        
         sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15184,12 +13702,40 @@ start536:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end536                        ; if cell is zero jump to end
+        JMP start536                     ; else continue
+end536:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end535                        ; if cell is zero jump to end
+        JMP start535                     ; else continue
+end535:        
+        
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end114                        ; if cell is zero jump to end
+        JMP start114                     ; else continue
+end114:        
+        
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15199,7 +13745,15 @@ start536:
 start537:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15212,6 +13766,8 @@ end537:
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -15220,7 +13776,20 @@ end537:
 start538:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1  ; move number of characters to output into eax register
+        call output
+
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15230,20 +13799,7 @@ start538:
         JMP start538                     ; else continue
 end538:        
         
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end536                        ; if cell is zero jump to end
-        JMP start536                     ; else continue
-end536:        
-        
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15258,8 +13814,8 @@ start539:
 
         sub ebx, 7                      ; move cell-pointer (decrement)
 
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        mov eax, 1  ; move number of characters to output into eax register
+        call output
 
         add ebx, 7                      ; move cell-pointer (increment)
 
@@ -15271,10 +13827,7 @@ start539:
         JMP start539                     ; else continue
 end539:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
+        sub ebx, 3                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15284,7 +13837,8 @@ end539:
 start540:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15294,7 +13848,7 @@ start540:
         JMP start540                     ; else continue
 end540:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15307,8 +13861,6 @@ start541:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -15319,17 +13871,6 @@ end541:
         
         add ebx, 1                      ; move cell-pointer (increment)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end534                        ; if cell is zero jump to end
-        JMP start534                     ; else continue
-end534:        
-        
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
@@ -15338,11 +13879,6 @@ end534:
 start542:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -15354,8 +13890,7 @@ start542:
         JMP start542                     ; else continue
 end542:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15365,11 +13900,6 @@ end542:
 start543:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -15381,7 +13911,7 @@ start543:
         JMP start543                     ; else continue
 end543:        
         
-        sub ebx, 7                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15393,18 +13923,6 @@ start544:
             
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
-
-        add ebx, 6                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15427,18 +13945,6 @@ start545:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 7                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 8                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -15447,7 +13953,7 @@ start545:
         JMP start545                     ; else continue
 end545:        
         
-        add ebx, 6                      ; move cell-pointer (increment)
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15457,24 +13963,6 @@ end545:
 start546:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end546                        ; if cell is zero jump to end
-        JMP start546                     ; else continue
-end546:        
-        
         add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
@@ -15488,13 +13976,6 @@ start547:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 7                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -15503,7 +13984,7 @@ start547:
         JMP start547                     ; else continue
 end547:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15516,13 +13997,6 @@ start548:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 3                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 3                      ; move cell-pointer (decrement)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -15532,14 +14006,6 @@ start548:
 end548:        
         
         add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
-        mov eax, 36                     ; add n to current cell
-        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15552,7 +14018,15 @@ start549:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end549                        ; if cell is zero jump to end
+        JMP start549                     ; else continue
+end549:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15562,7 +14036,8 @@ start549:
 start550:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15572,8 +14047,7 @@ start550:
         JMP start550                     ; else continue
 end550:        
         
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15583,7 +14057,8 @@ end550:
 start551:
                 
             
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15593,17 +14068,7 @@ start551:
         JMP start551                     ; else continue
 end551:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end549                        ; if cell is zero jump to end
-        JMP start549                     ; else continue
-end549:        
-        
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 1                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15613,7 +14078,8 @@ end549:
 start552:
                 
             
-        add ebx, 1                      ; move cell-pointer (increment)
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15623,7 +14089,17 @@ start552:
         JMP start552                     ; else continue
 end552:        
         
-        sub ebx, 2                      ; move cell-pointer (decrement)
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end546                        ; if cell is zero jump to end
+        JMP start546                     ; else continue
+end546:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15633,10 +14109,7 @@ end552:
 start553:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15646,7 +14119,7 @@ start553:
         JMP start553                     ; else continue
 end553:        
         
-        add ebx, 36                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15656,7 +14129,7 @@ end553:
 start554:
                 
             
-        sub ebx, 45                      ; move cell-pointer (decrement)
+        add ebx, 5                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15677,17 +14150,7 @@ start555:
         JMP start555                     ; else continue
 end555:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 16                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 21                      ; move cell-pointer (increment)
+        add ebx, 4                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15697,10 +14160,7 @@ end555:
         JMP start554                     ; else continue
 end554:        
         
-        add ebx, 36                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15710,13 +14170,7 @@ end554:
 start556:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15726,8 +14180,10 @@ start556:
         JMP start556                     ; else continue
 end556:        
         
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 11                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15737,24 +14193,6 @@ end556:
 start557:
                 
             
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end557                        ; if cell is zero jump to end
-        JMP start557                     ; else continue
-end557:        
-        
-        sub ebx, 18                      ; move cell-pointer (decrement)
-
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
@@ -15766,13 +14204,15 @@ end557:
 start558:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15782,10 +14222,27 @@ start558:
         JMP start558                     ; else continue
 end558:        
         
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        add ebx, 9                      ; move cell-pointer (increment)
 
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end557                        ; if cell is zero jump to end
+        JMP start557                     ; else continue
+end557:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15795,15 +14252,7 @@ end558:
 start559:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15813,25 +14262,7 @@ start559:
         JMP start559                     ; else continue
 end559:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end527                        ; if cell is zero jump to end
-        JMP start527                     ; else continue
-end527:        
-        
-        add ebx, 10                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15841,39 +14272,15 @@ end527:
 start560:
                 
             
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end561                        ; if cell is zero, don't enter scope
-start561:
-                
-            
-        add ebx, 5                      ; move cell-pointer (increment)
-
-        mov eax, 15                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 5                      ; move cell-pointer (decrement)
-
-        mov eax, 2                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end561                        ; if cell is zero jump to end
-        JMP start561                     ; else continue
-end561:        
-        
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15883,12 +14290,23 @@ end561:
         JMP start560                     ; else continue
 end560:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
-        mov eax, 16                     ; sub n from current cell
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end561                        ; if cell is zero, don't enter scope
+start561:
+                
+            
+        mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        add ebx, 2                      ; move cell-pointer (increment)
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15901,13 +14319,6 @@ start562:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 2                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 2                      ; move cell-pointer (increment)
-
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
@@ -15916,7 +14327,7 @@ start562:
         JMP start562                     ; else continue
 end562:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        add ebx, 2                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15926,15 +14337,7 @@ end562:
 start563:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        sub ebx, 4                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        add ebx, 4                      ; move cell-pointer (increment)
+        add ebx, 9                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -15944,7 +14347,7 @@ start563:
         JMP start563                     ; else continue
 end563:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15952,6 +14355,16 @@ end563:
         cmp [edx], byte 0x0            ; compare with zero
         JE end564                        ; if cell is zero, don't enter scope
 start564:
+                
+            
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end565                        ; if cell is zero, don't enter scope
+start565:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -15968,24 +14381,11 @@ start564:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end564                        ; if cell is zero jump to end
-        JMP start564                     ; else continue
-end564:        
+        JE end565                        ; if cell is zero jump to end
+        JMP start565                     ; else continue
+end565:        
         
-        sub ebx, 7                      ; move cell-pointer (decrement)
-
-        mov eax, 4                     ; add n to current cell
-        call add                       ; add value to cell
-
-; scope
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx                     ; add offset (cell counter)
-        cmp [edx], byte 0x0            ; compare with zero
-        JE end565                        ; if cell is zero, don't enter scope
-start565:
-                
-            
-        add ebx, 1                      ; move cell-pointer (increment)
+        sub ebx, 6                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -15998,25 +14398,12 @@ start566:
         mov eax, 1                     ; sub n from current cell
         call sub                       ; sub value from cell
 
-        sub ebx, 34                      ; move cell-pointer (decrement)
+        add ebx, 6                      ; move cell-pointer (increment)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        add ebx, 34                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end566                        ; if cell is zero jump to end
-        JMP start566                     ; else continue
-end566:        
-        
-        sub ebx, 1                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -16026,15 +14413,7 @@ end566:
 start567:
                 
             
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
-
-        add ebx, 1                      ; move cell-pointer (increment)
-
-        mov eax, 1                     ; add n to current cell
-        call add                       ; add value to cell
-
-        sub ebx, 1                      ; move cell-pointer (decrement)
+        sub ebx, 9                      ; move cell-pointer (decrement)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
@@ -16044,20 +14423,7 @@ start567:
         JMP start567                     ; else continue
 end567:        
         
-        add ebx, 1                      ; move cell-pointer (increment)
-
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end565                        ; if cell is zero jump to end
-        JMP start565                     ; else continue
-end565:        
-        
-        sub ebx, 21                      ; move cell-pointer (decrement)
-
-        mov eax, 1                     ; sub n from current cell
-        call sub                       ; sub value from cell
+        add ebx, 7                      ; move cell-pointer (increment)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
@@ -16065,6 +14431,147 @@ end565:
         cmp [edx], byte 0x0            ; compare with zero
         JE end568                        ; if cell is zero, don't enter scope
 start568:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end568                        ; if cell is zero jump to end
+        JMP start568                     ; else continue
+end568:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end566                        ; if cell is zero jump to end
+        JMP start566                     ; else continue
+end566:        
+        
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end564                        ; if cell is zero jump to end
+        JMP start564                     ; else continue
+end564:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end561                        ; if cell is zero jump to end
+        JMP start561                     ; else continue
+end561:        
+        
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end569                        ; if cell is zero, don't enter scope
+start569:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end569                        ; if cell is zero jump to end
+        JMP start569                     ; else continue
+end569:        
+        
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end570                        ; if cell is zero, don't enter scope
+start570:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end571                        ; if cell is zero, don't enter scope
+start571:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end572                        ; if cell is zero, don't enter scope
+start572:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end572                        ; if cell is zero jump to end
+        JMP start572                     ; else continue
+end572:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end573                        ; if cell is zero, don't enter scope
+start573:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -16081,42 +14588,111 @@ start568:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end568                        ; if cell is zero jump to end
-        JMP start568                     ; else continue
-end568:        
+        JE end573                        ; if cell is zero jump to end
+        JMP start573                     ; else continue
+end573:        
         
-        add ebx, 4                      ; move cell-pointer (increment)
+        add ebx, 8                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end520                        ; if cell is zero jump to end
-        JMP start520                     ; else continue
-end520:        
+        JE end571                        ; if cell is zero jump to end
+        JMP start571                     ; else continue
+end571:        
         
-        sub ebx, 13                      ; move cell-pointer (decrement)
+        sub ebx, 2                      ; move cell-pointer (decrement)
 
-; scope end
-        mov edx, MEM                   ; get base address of cells
-        add edx, ebx
-        cmp [edx], byte 00
-        JE end519                        ; if cell is zero jump to end
-        JMP start519                     ; else continue
-end519:        
-        
-        mov eax, 10                     ; add n to current cell
+        mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
 
-        mov eax, 1  ; move number of characters to output into eax register
-        call output
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
 ; scope
         mov edx, MEM                   ; get base address of cells
         add edx, ebx                     ; add offset (cell counter)
         cmp [edx], byte 0x0            ; compare with zero
-        JE end569                        ; if cell is zero, don't enter scope
-start569:
+        JE end574                        ; if cell is zero, don't enter scope
+start574:
+                
+            
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end575                        ; if cell is zero, don't enter scope
+start575:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end575                        ; if cell is zero jump to end
+        JMP start575                     ; else continue
+end575:        
+        
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end574                        ; if cell is zero jump to end
+        JMP start574                     ; else continue
+end574:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end576                        ; if cell is zero, don't enter scope
+start576:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end576                        ; if cell is zero jump to end
+        JMP start576                     ; else continue
+end576:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end577                        ; if cell is zero, don't enter scope
+start577:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end578                        ; if cell is zero, don't enter scope
+start578:
                 
             
         mov eax, 1                     ; sub n from current cell
@@ -16126,22 +14702,2837 @@ start569:
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end569                        ; if cell is zero jump to end
-        JMP start569                     ; else continue
-end569:        
+        JE end578                        ; if cell is zero jump to end
+        JMP start578                     ; else continue
+end578:        
         
-        sub ebx, 19                      ; move cell-pointer (decrement)
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end579                        ; if cell is zero, don't enter scope
+start579:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
 
         mov eax, 1                     ; add n to current cell
         call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end580                        ; if cell is zero, don't enter scope
+start580:
+                
+            
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
 
 ; scope end
         mov edx, MEM                   ; get base address of cells
         add edx, ebx
         cmp [edx], byte 00
-        JE end1                        ; if cell is zero jump to end
-        JMP start1                     ; else continue
-end1:        
+        JE end580                        ; if cell is zero jump to end
+        JMP start580                     ; else continue
+end580:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end581                        ; if cell is zero, don't enter scope
+start581:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end581                        ; if cell is zero jump to end
+        JMP start581                     ; else continue
+end581:        
+        
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end579                        ; if cell is zero jump to end
+        JMP start579                     ; else continue
+end579:        
+        
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end582                        ; if cell is zero, don't enter scope
+start582:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end582                        ; if cell is zero jump to end
+        JMP start582                     ; else continue
+end582:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end577                        ; if cell is zero jump to end
+        JMP start577                     ; else continue
+end577:        
+        
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end583                        ; if cell is zero, don't enter scope
+start583:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end583                        ; if cell is zero jump to end
+        JMP start583                     ; else continue
+end583:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end570                        ; if cell is zero jump to end
+        JMP start570                     ; else continue
+end570:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end584                        ; if cell is zero, don't enter scope
+start584:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end584                        ; if cell is zero jump to end
+        JMP start584                     ; else continue
+end584:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end585                        ; if cell is zero, don't enter scope
+start585:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end586                        ; if cell is zero, don't enter scope
+start586:
+                
+            
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end587                        ; if cell is zero, don't enter scope
+start587:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end587                        ; if cell is zero jump to end
+        JMP start587                     ; else continue
+end587:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end586                        ; if cell is zero jump to end
+        JMP start586                     ; else continue
+end586:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end588                        ; if cell is zero, don't enter scope
+start588:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end589                        ; if cell is zero, don't enter scope
+start589:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end589                        ; if cell is zero jump to end
+        JMP start589                     ; else continue
+end589:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end590                        ; if cell is zero, don't enter scope
+start590:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end591                        ; if cell is zero, don't enter scope
+start591:
+                
+            
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end591                        ; if cell is zero jump to end
+        JMP start591                     ; else continue
+end591:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end592                        ; if cell is zero, don't enter scope
+start592:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end592                        ; if cell is zero jump to end
+        JMP start592                     ; else continue
+end592:        
+        
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end590                        ; if cell is zero jump to end
+        JMP start590                     ; else continue
+end590:        
+        
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end593                        ; if cell is zero, don't enter scope
+start593:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end593                        ; if cell is zero jump to end
+        JMP start593                     ; else continue
+end593:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end588                        ; if cell is zero jump to end
+        JMP start588                     ; else continue
+end588:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 5                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end594                        ; if cell is zero, don't enter scope
+start594:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end595                        ; if cell is zero, don't enter scope
+start595:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end595                        ; if cell is zero jump to end
+        JMP start595                     ; else continue
+end595:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end594                        ; if cell is zero jump to end
+        JMP start594                     ; else continue
+end594:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end596                        ; if cell is zero, don't enter scope
+start596:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end596                        ; if cell is zero jump to end
+        JMP start596                     ; else continue
+end596:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end597                        ; if cell is zero, don't enter scope
+start597:
+                
+            
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end598                        ; if cell is zero, don't enter scope
+start598:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end598                        ; if cell is zero jump to end
+        JMP start598                     ; else continue
+end598:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end599                        ; if cell is zero, don't enter scope
+start599:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end600                        ; if cell is zero, don't enter scope
+start600:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end600                        ; if cell is zero jump to end
+        JMP start600                     ; else continue
+end600:        
+        
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end601                        ; if cell is zero, don't enter scope
+start601:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 16                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end602                        ; if cell is zero, don't enter scope
+start602:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end602                        ; if cell is zero jump to end
+        JMP start602                     ; else continue
+end602:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end603                        ; if cell is zero, don't enter scope
+start603:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end603                        ; if cell is zero jump to end
+        JMP start603                     ; else continue
+end603:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end604                        ; if cell is zero, don't enter scope
+start604:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end604                        ; if cell is zero jump to end
+        JMP start604                     ; else continue
+end604:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end601                        ; if cell is zero jump to end
+        JMP start601                     ; else continue
+end601:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end599                        ; if cell is zero jump to end
+        JMP start599                     ; else continue
+end599:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end605                        ; if cell is zero, don't enter scope
+start605:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end605                        ; if cell is zero jump to end
+        JMP start605                     ; else continue
+end605:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end606                        ; if cell is zero, don't enter scope
+start606:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end607                        ; if cell is zero, don't enter scope
+start607:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end607                        ; if cell is zero jump to end
+        JMP start607                     ; else continue
+end607:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end608                        ; if cell is zero, don't enter scope
+start608:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 14                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end609                        ; if cell is zero, don't enter scope
+start609:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end609                        ; if cell is zero jump to end
+        JMP start609                     ; else continue
+end609:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end610                        ; if cell is zero, don't enter scope
+start610:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end610                        ; if cell is zero jump to end
+        JMP start610                     ; else continue
+end610:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end611                        ; if cell is zero, don't enter scope
+start611:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end611                        ; if cell is zero jump to end
+        JMP start611                     ; else continue
+end611:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end612                        ; if cell is zero, don't enter scope
+start612:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end612                        ; if cell is zero jump to end
+        JMP start612                     ; else continue
+end612:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end608                        ; if cell is zero jump to end
+        JMP start608                     ; else continue
+end608:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end606                        ; if cell is zero jump to end
+        JMP start606                     ; else continue
+end606:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end613                        ; if cell is zero, don't enter scope
+start613:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end614                        ; if cell is zero, don't enter scope
+start614:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end614                        ; if cell is zero jump to end
+        JMP start614                     ; else continue
+end614:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end613                        ; if cell is zero jump to end
+        JMP start613                     ; else continue
+end613:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end597                        ; if cell is zero jump to end
+        JMP start597                     ; else continue
+end597:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end615                        ; if cell is zero, don't enter scope
+start615:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end615                        ; if cell is zero jump to end
+        JMP start615                     ; else continue
+end615:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end616                        ; if cell is zero, don't enter scope
+start616:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end616                        ; if cell is zero jump to end
+        JMP start616                     ; else continue
+end616:        
+        
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 5                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end617                        ; if cell is zero, don't enter scope
+start617:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end618                        ; if cell is zero, don't enter scope
+start618:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end618                        ; if cell is zero jump to end
+        JMP start618                     ; else continue
+end618:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end617                        ; if cell is zero jump to end
+        JMP start617                     ; else continue
+end617:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end619                        ; if cell is zero, don't enter scope
+start619:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end619                        ; if cell is zero jump to end
+        JMP start619                     ; else continue
+end619:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end585                        ; if cell is zero jump to end
+        JMP start585                     ; else continue
+end585:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end22                        ; if cell is zero jump to end
+        JMP start22                     ; else continue
+end22:        
+        
+        sub ebx, 4                      ; move cell-pointer (decrement)
+
+        mov eax, 1  ; move number of characters to output into eax register
+        call output
+
+        add ebx, 10                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end620                        ; if cell is zero, don't enter scope
+start620:
+                
+            
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end621                        ; if cell is zero, don't enter scope
+start621:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end621                        ; if cell is zero jump to end
+        JMP start621                     ; else continue
+end621:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end620                        ; if cell is zero jump to end
+        JMP start620                     ; else continue
+end620:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end622                        ; if cell is zero, don't enter scope
+start622:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end622                        ; if cell is zero jump to end
+        JMP start622                     ; else continue
+end622:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 10                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end623                        ; if cell is zero, don't enter scope
+start623:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end624                        ; if cell is zero, don't enter scope
+start624:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end624                        ; if cell is zero jump to end
+        JMP start624                     ; else continue
+end624:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end623                        ; if cell is zero jump to end
+        JMP start623                     ; else continue
+end623:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 15                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end625                        ; if cell is zero, don't enter scope
+start625:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end625                        ; if cell is zero jump to end
+        JMP start625                     ; else continue
+end625:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end626                        ; if cell is zero, don't enter scope
+start626:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end626                        ; if cell is zero jump to end
+        JMP start626                     ; else continue
+end626:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end627                        ; if cell is zero, don't enter scope
+start627:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end628                        ; if cell is zero, don't enter scope
+start628:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end628                        ; if cell is zero jump to end
+        JMP start628                     ; else continue
+end628:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end629                        ; if cell is zero, don't enter scope
+start629:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end629                        ; if cell is zero jump to end
+        JMP start629                     ; else continue
+end629:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end630                        ; if cell is zero, don't enter scope
+start630:
+                
+            
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end631                        ; if cell is zero, don't enter scope
+start631:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end631                        ; if cell is zero jump to end
+        JMP start631                     ; else continue
+end631:        
+        
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end632                        ; if cell is zero, don't enter scope
+start632:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end633                        ; if cell is zero, don't enter scope
+start633:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end633                        ; if cell is zero jump to end
+        JMP start633                     ; else continue
+end633:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end634                        ; if cell is zero, don't enter scope
+start634:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end634                        ; if cell is zero jump to end
+        JMP start634                     ; else continue
+end634:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end632                        ; if cell is zero jump to end
+        JMP start632                     ; else continue
+end632:        
+        
+        sub ebx, 10                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end630                        ; if cell is zero jump to end
+        JMP start630                     ; else continue
+end630:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end627                        ; if cell is zero jump to end
+        JMP start627                     ; else continue
+end627:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end635                        ; if cell is zero, don't enter scope
+start635:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end635                        ; if cell is zero jump to end
+        JMP start635                     ; else continue
+end635:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end636                        ; if cell is zero, don't enter scope
+start636:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end637                        ; if cell is zero, don't enter scope
+start637:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end638                        ; if cell is zero, don't enter scope
+start638:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end638                        ; if cell is zero jump to end
+        JMP start638                     ; else continue
+end638:        
+        
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end639                        ; if cell is zero, don't enter scope
+start639:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end639                        ; if cell is zero jump to end
+        JMP start639                     ; else continue
+end639:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end637                        ; if cell is zero jump to end
+        JMP start637                     ; else continue
+end637:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end640                        ; if cell is zero, don't enter scope
+start640:
+                
+            
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end641                        ; if cell is zero, don't enter scope
+start641:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end641                        ; if cell is zero jump to end
+        JMP start641                     ; else continue
+end641:        
+        
+        sub ebx, 15                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end640                        ; if cell is zero jump to end
+        JMP start640                     ; else continue
+end640:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end642                        ; if cell is zero, don't enter scope
+start642:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end642                        ; if cell is zero jump to end
+        JMP start642                     ; else continue
+end642:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end643                        ; if cell is zero, don't enter scope
+start643:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end644                        ; if cell is zero, don't enter scope
+start644:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end644                        ; if cell is zero jump to end
+        JMP start644                     ; else continue
+end644:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end645                        ; if cell is zero, don't enter scope
+start645:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end646                        ; if cell is zero, don't enter scope
+start646:
+                
+            
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end646                        ; if cell is zero jump to end
+        JMP start646                     ; else continue
+end646:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end647                        ; if cell is zero, don't enter scope
+start647:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end647                        ; if cell is zero jump to end
+        JMP start647                     ; else continue
+end647:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end645                        ; if cell is zero jump to end
+        JMP start645                     ; else continue
+end645:        
+        
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end648                        ; if cell is zero, don't enter scope
+start648:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end648                        ; if cell is zero jump to end
+        JMP start648                     ; else continue
+end648:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end643                        ; if cell is zero jump to end
+        JMP start643                     ; else continue
+end643:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 5                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end649                        ; if cell is zero, don't enter scope
+start649:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end649                        ; if cell is zero jump to end
+        JMP start649                     ; else continue
+end649:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end636                        ; if cell is zero jump to end
+        JMP start636                     ; else continue
+end636:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end650                        ; if cell is zero, don't enter scope
+start650:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end650                        ; if cell is zero jump to end
+        JMP start650                     ; else continue
+end650:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end651                        ; if cell is zero, don't enter scope
+start651:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end652                        ; if cell is zero, don't enter scope
+start652:
+                
+            
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end653                        ; if cell is zero, don't enter scope
+start653:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end653                        ; if cell is zero jump to end
+        JMP start653                     ; else continue
+end653:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end652                        ; if cell is zero jump to end
+        JMP start652                     ; else continue
+end652:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end654                        ; if cell is zero, don't enter scope
+start654:
+                
+            
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end655                        ; if cell is zero, don't enter scope
+start655:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end655                        ; if cell is zero jump to end
+        JMP start655                     ; else continue
+end655:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end656                        ; if cell is zero, don't enter scope
+start656:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end657                        ; if cell is zero, don't enter scope
+start657:
+                
+            
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end657                        ; if cell is zero jump to end
+        JMP start657                     ; else continue
+end657:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end658                        ; if cell is zero, don't enter scope
+start658:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end658                        ; if cell is zero jump to end
+        JMP start658                     ; else continue
+end658:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end656                        ; if cell is zero jump to end
+        JMP start656                     ; else continue
+end656:        
+        
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end659                        ; if cell is zero, don't enter scope
+start659:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 7                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 7                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end659                        ; if cell is zero jump to end
+        JMP start659                     ; else continue
+end659:        
+        
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end654                        ; if cell is zero jump to end
+        JMP start654                     ; else continue
+end654:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 5                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end660                        ; if cell is zero, don't enter scope
+start660:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end661                        ; if cell is zero, don't enter scope
+start661:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end661                        ; if cell is zero jump to end
+        JMP start661                     ; else continue
+end661:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end660                        ; if cell is zero jump to end
+        JMP start660                     ; else continue
+end660:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 27                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end662                        ; if cell is zero, don't enter scope
+start662:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end662                        ; if cell is zero jump to end
+        JMP start662                     ; else continue
+end662:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end663                        ; if cell is zero, don't enter scope
+start663:
+                
+            
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end664                        ; if cell is zero, don't enter scope
+start664:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end664                        ; if cell is zero jump to end
+        JMP start664                     ; else continue
+end664:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end665                        ; if cell is zero, don't enter scope
+start665:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 2                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end666                        ; if cell is zero, don't enter scope
+start666:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end666                        ; if cell is zero jump to end
+        JMP start666                     ; else continue
+end666:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end667                        ; if cell is zero, don't enter scope
+start667:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 17                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end668                        ; if cell is zero, don't enter scope
+start668:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end668                        ; if cell is zero jump to end
+        JMP start668                     ; else continue
+end668:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end669                        ; if cell is zero, don't enter scope
+start669:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end669                        ; if cell is zero jump to end
+        JMP start669                     ; else continue
+end669:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 5                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end670                        ; if cell is zero, don't enter scope
+start670:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end670                        ; if cell is zero jump to end
+        JMP start670                     ; else continue
+end670:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end667                        ; if cell is zero jump to end
+        JMP start667                     ; else continue
+end667:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end665                        ; if cell is zero jump to end
+        JMP start665                     ; else continue
+end665:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end671                        ; if cell is zero, don't enter scope
+start671:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end671                        ; if cell is zero jump to end
+        JMP start671                     ; else continue
+end671:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end672                        ; if cell is zero, don't enter scope
+start672:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 8                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 2                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end673                        ; if cell is zero, don't enter scope
+start673:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end673                        ; if cell is zero jump to end
+        JMP start673                     ; else continue
+end673:        
+        
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end674                        ; if cell is zero, don't enter scope
+start674:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 15                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end675                        ; if cell is zero, don't enter scope
+start675:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end675                        ; if cell is zero jump to end
+        JMP start675                     ; else continue
+end675:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end676                        ; if cell is zero, don't enter scope
+start676:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end676                        ; if cell is zero jump to end
+        JMP start676                     ; else continue
+end676:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 6                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end677                        ; if cell is zero, don't enter scope
+start677:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end677                        ; if cell is zero jump to end
+        JMP start677                     ; else continue
+end677:        
+        
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end678                        ; if cell is zero, don't enter scope
+start678:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end678                        ; if cell is zero jump to end
+        JMP start678                     ; else continue
+end678:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end674                        ; if cell is zero jump to end
+        JMP start674                     ; else continue
+end674:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end672                        ; if cell is zero jump to end
+        JMP start672                     ; else continue
+end672:        
+        
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        add ebx, 1                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end679                        ; if cell is zero, don't enter scope
+start679:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 1                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end680                        ; if cell is zero, don't enter scope
+start680:
+                
+            
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end680                        ; if cell is zero jump to end
+        JMP start680                     ; else continue
+end680:        
+        
+        sub ebx, 8                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end679                        ; if cell is zero jump to end
+        JMP start679                     ; else continue
+end679:        
+        
+        add ebx, 8                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end663                        ; if cell is zero jump to end
+        JMP start663                     ; else continue
+end663:        
+        
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end681                        ; if cell is zero, don't enter scope
+start681:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end681                        ; if cell is zero jump to end
+        JMP start681                     ; else continue
+end681:        
+        
+        add ebx, 4                      ; move cell-pointer (increment)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end682                        ; if cell is zero, don't enter scope
+start682:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end682                        ; if cell is zero jump to end
+        JMP start682                     ; else continue
+end682:        
+        
+        sub ebx, 3                      ; move cell-pointer (decrement)
+
+        mov eax, 5                     ; add n to current cell
+        call add                       ; add value to cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end683                        ; if cell is zero, don't enter scope
+start683:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end684                        ; if cell is zero, don't enter scope
+start684:
+                
+            
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 9                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; add n to current cell
+        call add                       ; add value to cell
+
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end684                        ; if cell is zero jump to end
+        JMP start684                     ; else continue
+end684:        
+        
+        add ebx, 9                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end683                        ; if cell is zero jump to end
+        JMP start683                     ; else continue
+end683:        
+        
+        add ebx, 5                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        add ebx, 27                      ; move cell-pointer (increment)
+
+        mov eax, 1                     ; sub n from current cell
+        call sub                       ; sub value from cell
+
+        sub ebx, 6                      ; move cell-pointer (decrement)
+
+; scope
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx                     ; add offset (cell counter)
+        cmp [edx], byte 0x0            ; compare with zero
+        JE end685                        ; if cell is zero, don't enter scope
+start685:
+                
+            
+        sub ebx, 9                      ; move cell-pointer (decrement)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end685                        ; if cell is zero jump to end
+        JMP start685                     ; else continue
+end685:        
+        
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end651                        ; if cell is zero jump to end
+        JMP start651                     ; else continue
+end651:        
+        
+        add ebx, 3                      ; move cell-pointer (increment)
+
+; scope end
+        mov edx, MEM                   ; get base address of cells
+        add edx, ebx
+        cmp [edx], byte 00
+        JE end12                        ; if cell is zero jump to end
+        JMP start12                     ; else continue
+end12:        
             
 ; Exit
         mov eax, 1
